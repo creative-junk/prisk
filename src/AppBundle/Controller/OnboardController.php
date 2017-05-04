@@ -38,33 +38,7 @@ class OnboardController extends Controller
             'onboardForm'=>$form->createView()
         ]);
     }
-    /**
-     * @Route("/{id/step2}",name="step2")
-     */
-    public function profileAction(Request $request,Onboard $onboard)
-    {
-        $profile = new Profile();
-        $profile->setCreatedAt(new \DateTimeImmutable());
-        $form = $this->createForm(OnboardForm::class,$onboard);
-        $form->handleRequest($request);
 
-        if($form->isValid()){
-            $onboard = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($onboard);
-            $em->flush();
-
-            $this->sendWelcomeEmail($onboard->getfirstName(),$onboard->getEmail(),$onboard->getId());
-
-            return $this->redirectToRoute('onboarded');
-        }else{
-            $errors = $form->getErrors();
-        }
-
-        return $this->render('onboard/onboard.htm.twig',[
-            'onboardForm'=>$form->createView()
-        ]);
-    }
     /**
      * @Route("/onboard",name="onboard")
      */
@@ -97,7 +71,7 @@ class OnboardController extends Controller
     public function sendWelcomeEmail(String $firstName,String $emailAddress,String $code){
         $message = \Swift_Message::newInstance()
             ->setSubject('PRISK Online Portal Registration')
-            ->setFrom('prisk@creative-junk.com','PRISK Online Portal Registration')
+            ->setFrom('prisk@creative-junk.com','PRISK Online Portal Team')
             ->setTo($emailAddress)
             ->setBody(
                 $this->renderView(

@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,8 +17,10 @@ class ProfileForm extends AbstractType
             ->add('middleName')
             ->add('lastName')
             ->add('ipn')
-            ->add('memberNumber')
-            ->add('prefix', ChoiceType::class, array(
+            ->add('memberNumber',null,[
+                'attr'=>['placeholder' => 'PXXX']
+            ])
+            ->add('prefix', ChoiceType::class, [
                 'choices' => array(
                     'Mr' => 'Mr',
                     'Mrs' => 'Mrs',
@@ -28,8 +30,13 @@ class ProfileForm extends AbstractType
                     'Pst' => 'Pst',
                     'Other' => 'Other',
                 ),
-            ))
-            ->add('dateOfBirth')
+            ])
+            ->add('dateOfBirth',DateType::class,[
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => ['class' => 'js-datepicker'],
+                'html5' => false,
+            ])
             ->add('stageName')
             ->add('nationality', ChoiceType::class, array(
                 'choices' => array(
@@ -56,9 +63,18 @@ class ProfileForm extends AbstractType
                 'choices' => array(
                     'English' => 'English',
                     'Swahili' => 'Swahili',
-                    )
+                    ),
             ))
-            ->add('maritalStatus')
+            ->add('maritalStatus',ChoiceType::class, array(
+        'choices' => array(
+            'Single' => 'Single',
+            'Married' => 'Married',
+            'Separated' => 'Separated',
+            'Divorced' => 'Divorced',
+            'Widowed' => 'Widowed',
+            'Other' => 'Other',
+        ),
+    ))
             ->add('spouseName')
             ->add('idNumber')
             ->add('itaxPin')
@@ -81,35 +97,54 @@ class ProfileForm extends AbstractType
                     'Zambia' => 'Zambia',
                     'Zibambwe' => 'Zimbabwe',
                     'Liberia' => 'Liberia',
-                )
+                ),
             ))
             ->add('memberType',ChoiceType::class, array(
                 'choices' => array(
                     'L' => 'L',
                     'WW' => 'WW',
                     'R' => 'R',
-                    )
+                    ),
             ))
-            ->add('gender',RadioType::class,array(
+            ->add('gender',ChoiceType::class,array(
                 'choices'=>array(
                     'Male'=>'Male',
                     'Female'=>'Female',
-                )
+                ),
+                'choices_as_values' => true,
+                'multiple'=>false,
+                'expanded'=>true,
+                'data' => 'Male',
             ))
-            ->add('rights',RadioType::class,array(
+            ->add('rights',ChoiceType::class,array(
                 'choices'=>array(
                     'Sound Recording'=>'Sound Recording',
                     'Actor'=>'Actor',
                     'Musician'=>'Musician',
-                )
+                ),
+                'choices_as_values' => true,
+                'multiple'=>false,
+                'expanded'=>true,
+                'data' => 'Musician',
             ))
             ->add('registrationNumber')
-            ->add('sourceOfData')
-            ->add('registrationDate')
-            ->add('status',RadioType::class,array(
+            ->add('sourceOfData',null,[
+                'attr'=>['placeholder' => 'Self']
+            ])
+            ->add('registrationDate',DateType::class,[
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => ['class' => 'js-datepicker'],
+                'html5' => false,
+            ])
+            ->add('status',ChoiceType::class,array(
                 'choices'=>array(
                     'Paid Membership'=>'Paid Membership',
-                )
+                ),
+                'choices_as_values' => true,
+                'multiple'=>false,
+                'expanded'=>true,
+                'data' => 'Paid Membership',
             ))
             ->add('physicalAddress')
             ->add('postalAddress')
@@ -208,7 +243,12 @@ class ProfileForm extends AbstractType
                     'Liberia' => 'Liberia',
                     )
             ))
-            ->add('bankAccountType')
+            ->add('bankAccountType',ChoiceType::class, array(
+                'choices' => array(
+                    'Checking' => 'Checking',
+                    'Savings' => 'Savings',
+                ),
+            ))
             ->add('bankPostalAddress')
             ->add('iban')
             ->add('swiftBic')
@@ -250,7 +290,12 @@ class ProfileForm extends AbstractType
             ))
             ->add('nextOfKinPhoneNumber')
             ->add('nextOfKinEmail')
-            ->add('nextOfKinAddedDate');
+            ->add('nextOfKinAddedDate',DateType::class,[
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker'],
+                'html5' => false,
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -6,12 +6,12 @@ Dear {{ name }}!
 You have successfully completed the first step. To proceed with the registration, click on the link below.
 </p><p>
 {# example, assuming you have a route named "login" #}
-To login, go to: <a href="{{ url('/') }}/{{ code }}">Click Here</a>.
+To login, go to: <a href="{{ path('home') }}/profile/{{ code }}/update">Click Here</a>.
 </p><p>
 Thank you!
 </p><p>
 --PRISK Team
 </p><p>
-{# Makes an absolute URL to the /images/logo.png file #}
+{# Makes an absolute URL to the loko/images/PRISK_Logo_v_2.2_website.png file #}
 <img src="{{ absolute_url(asset('loko/images/PRISK_Logo_v_2.2_website.png')) }}">
 </p>
