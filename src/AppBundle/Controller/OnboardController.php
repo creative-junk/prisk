@@ -11,13 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class OnboardController extends Controller
 {
+
+
     /**
-     * @Route("/",name="home")
+     * @Route("/",name="onboard")
      */
-    public function indexAction(Request $request)
-    {
+    public function onboardAction(Request $request){
         $onboard = new Onboard();
-        $onboard->setCreatedAt(new \DateTimeImmutable());
+        $onboard->setCreatedAt(new \DateTime());
         $form = $this->createForm(OnboardForm::class,$onboard);
         $form->handleRequest($request);
 
@@ -29,29 +30,6 @@ class OnboardController extends Controller
 
             $this->sendWelcomeEmail($onboard->getfirstName(),$onboard->getEmail(),$onboard->getId());
 
-            return $this->redirectToRoute('onboarded');
-        }else{
-            $errors = $form->getErrors();
-        }
-
-        return $this->render('onboard/onboard.htm.twig',[
-            'onboardForm'=>$form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/onboard",name="onboard")
-     */
-    public function onboardAction(Request $request){
-        $onboard = new Onboard();
-        $form = $this->createForm(OnboardForm::class,$onboard);
-        $form->handleRequest($request);
-
-        if($form->isValid()){
-            $onboard = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($onboard);
-            $em->flush();
             return $this->redirectToRoute('onboarded');
         }else{
             $errors = $form->getErrors();
@@ -68,15 +46,15 @@ class OnboardController extends Controller
         return $this->render('onboard/onboarded.htm.twig');
     }
 
-    public function sendWelcomeEmail(String $firstName,String $emailAddress,String $code){
+    public function sendWelcomeEmail($firstName,$emailAddress,$code){
         $message = \Swift_Message::newInstance()
             ->setSubject('PRISK Online Portal Registration')
-            ->setFrom('prisk@creative-junk.com','PRISK Online Portal Team')
+            ->setFrom('portal@prisk.or.ke','PRISK Online Portal Team')
             ->setTo($emailAddress)
             ->setBody(
                 $this->renderView(
                 // app/Resources/views/Emails/onboard.htm.twig
-                    'Emails/onboard.htm.twig',
+                    'Emails/onboarded.htm.twig',
                     array(
                         'name' => $firstName,
                         'code' => $code

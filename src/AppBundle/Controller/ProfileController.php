@@ -111,7 +111,7 @@ class ProfileController extends Controller
             'errors'=>$errors
         ]);
     }
-    public function sendWelcomeEmail(String $firstName,String $emailAddress,String $code){
+    public function sendWelcomeEmail($firstName,$emailAddress,$code){
         $message = \Swift_Message::newInstance()
             ->setSubject('PRISK Online Portal Profile')
             ->setFrom('prisk@creative-junk.com','PRISK Online Portal Team')

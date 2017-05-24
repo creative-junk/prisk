@@ -18,7 +18,10 @@ class ProfileForm extends AbstractType
             ->add('lastName')
             ->add('ipn')
             ->add('memberNumber',null,[
-                'attr'=>['placeholder' => 'PXXX']
+                'attr'=>[
+                    'placeholder' => 'PXXX',
+                    'disabled'      => true
+                ]
             ])
             ->add('prefix', ChoiceType::class, [
                 'choices' => array(
@@ -63,18 +66,18 @@ class ProfileForm extends AbstractType
                 'choices' => array(
                     'English' => 'English',
                     'Swahili' => 'Swahili',
-                    ),
+                ),
             ))
             ->add('maritalStatus',ChoiceType::class, array(
-        'choices' => array(
-            'Single' => 'Single',
-            'Married' => 'Married',
-            'Separated' => 'Separated',
-            'Divorced' => 'Divorced',
-            'Widowed' => 'Widowed',
-            'Other' => 'Other',
-        ),
-    ))
+                'choices' => array(
+                    'Single' => 'Single',
+                    'Married' => 'Married',
+                    'Separated' => 'Separated',
+                    'Divorced' => 'Divorced',
+                    'Widowed' => 'Widowed',
+                    'Other' => 'Other',
+                ),
+            ))
             ->add('spouseName')
             ->add('idNumber')
             ->add('itaxPin')
@@ -104,7 +107,7 @@ class ProfileForm extends AbstractType
                     'L' => 'L',
                     'WW' => 'WW',
                     'R' => 'R',
-                    ),
+                ),
             ))
             ->add('gender',ChoiceType::class,array(
                 'choices'=>array(
@@ -119,13 +122,9 @@ class ProfileForm extends AbstractType
             ->add('rights',ChoiceType::class,array(
                 'choices'=>array(
                     'Sound Recording'=>'Sound Recording',
-                    'Actor'=>'Actor',
-                    'Musician'=>'Musician',
-                ),
-                'choices_as_values' => true,
-                'multiple'=>false,
-                'expanded'=>true,
-                'data' => 'Musician',
+                    'Audio Visual - Actor'=>'Audio Visual - Actor',
+                    'Audio Visual - Musician'=>'Audio Visual - Musician',
+                )
             ))
             ->add('registrationNumber')
             ->add('sourceOfData',null,[
@@ -241,7 +240,7 @@ class ProfileForm extends AbstractType
                     'Zambian Kwacha' => 'Zambian Kwacha',
                     'Zimbabwe Dollar' => 'Zimbabwe Dollar',
                     'Liberia' => 'Liberia',
-                    )
+                )
             ))
             ->add('bankAccountType',ChoiceType::class, array(
                 'choices' => array(
@@ -259,7 +258,7 @@ class ProfileForm extends AbstractType
                     'Spouse' => 'Spouse',
                     'Parent' => 'Parent',
                     'Sibling' => 'Sibling',
-                    )
+                )
             ))
             ->add('nextOfKinIdNumber')
             ->add('nextOfKinPercent')
@@ -290,6 +289,7 @@ class ProfileForm extends AbstractType
             ))
             ->add('nextOfKinPhoneNumber')
             ->add('nextOfKinEmail')
+            ->add('mpesaConfirmationCode')
             ->add('nextOfKinAddedDate',DateType::class,[
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker'],

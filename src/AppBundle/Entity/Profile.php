@@ -274,9 +274,18 @@ class Profile
      */
     private $nextOfKinAddedDate;
     /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $isPaid;
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $mpesaConfirmationCode;
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
 
     /**
      * @return mixed
@@ -1167,6 +1176,7 @@ class Profile
         $this->nextOfKinAddedDate = $nextOfKinAddedDate;
     }
 
+
     /**
      * @return mixed
      */
@@ -1181,6 +1191,42 @@ class Profile
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+    /**
+     * @return mixed
+     */
+    public function getIsPaid()
+    {
+        return $this->isPaid;
+    }
+
+    /**
+     * @param mixed $isPaid
+     */
+    public function setIsPaid($isPaid)
+    {
+        $this->isPaid = $isPaid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMpesaConfirmationCode()
+    {
+        return $this->mpesaConfirmationCode;
+    }
+
+    /**
+     * @param mixed $mpesaConfirmationCode
+     */
+    public function setMpesaConfirmationCode($mpesaConfirmationCode)
+    {
+        if ($mpesaConfirmationCode==null){
+            $this->setIsPaid(false);
+        }else{
+            $this->setIsPaid(true);
+        }
+        $this->mpesaConfirmationCode = $mpesaConfirmationCode;
     }
 
 }
