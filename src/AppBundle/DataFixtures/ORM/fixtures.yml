@@ -1,5 +1,5 @@
 AppBundle\Entity\User:
-    user{1..3}:
+    user{1..30}:
         firstName: "<firstName($gender = null|'male'|'female')>"
         lastName: '<lastName()>'
         email: '<email()>'

@@ -10,12 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
-    /**
-     * @Route("/login",name="login")
-     */
-    public function loginAction(){
-        return $this->render('onboard/onboarded.htm.twig');
-    }
+    
     /**
      * @Route("/home",name="home")
      */

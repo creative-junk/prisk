@@ -10,9 +10,8 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class SecurityController extends Controller
 {
 
-
     /**
-     * @Route("/login/",name="user_login")
+     * @Route("/login/",name="login")
      *
      */
     public function loginUserAction()
@@ -36,7 +35,31 @@ class SecurityController extends Controller
                 'error' => $error,
             ));
     }
+    /**
+     * @Route("/login/admin",name="admin-login")
+     *
+     */
+    public function loginAdminAction()
+    {
+        $authenticationUtils = $this->get('security.authentication_utils');
 
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        $form = $this->createForm(LoginForm::class,[
+            '_username' => $lastUsername
+        ]);
+
+        return $this->render(
+            'admin/login.htm.twig',
+            array(
+                'loginForm' => $form->createView(),
+                'error' => $error,
+            ));
+    }
 
     /**
      * @Route("/logout",name="security_logout")
@@ -44,4 +67,5 @@ class SecurityController extends Controller
     public function logoutAction(){
         throw new \Exception('This should not be reached');
     }
+
 }
