@@ -74,3 +74,28 @@ doctrine_migrations:
     namespace: Application\Migrations
     table_name: migration_versions
     name: Application Migrations
+
+#KNP paginator
+knp_paginator:
+    page_range: 10                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'     # sliding pagination controls template
+        sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig' # sort link template
+
+#Vich Uploader
+vich_uploader:
+    db_driver: orm
+    mappings:
+            recording_mp3:
+                uri_prefix:         /assets/recordings
+                upload_destination: '%kernel.root_dir%/../web/assets/recordings'
+                namer:              vich_uploader.namer_uniqid
+
+                inject_on_load:     false
+                delete_on_update:   true
+                delete_on_remove:   true

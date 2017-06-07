@@ -29,6 +29,7 @@ class ProfileController extends Controller
         $profile->setStageName($onboard->getStageName());
         $profile->setEmailAddress($onboard->getEmail());
 
+
         $profile->setCreatedAt(new \DateTimeImmutable());
         $form = $this->createForm(ProfileForm::class,$profile);
         $form->handleRequest($request);
@@ -36,6 +37,14 @@ class ProfileController extends Controller
         if($form->isValid()){
             $profile = $form->getData();
             $em = $this->getDoctrine()->getManager();
+            //Check if user has paid
+            if(is_null($request->request->get('mpesaConfirmationCode'))){
+                $profile->setIsPaid(false);
+            }else{
+                $profile->setIsPaid(true);
+            }
+
+
             $em->persist($profile);
             $em->flush();
 
@@ -111,7 +120,7 @@ class ProfileController extends Controller
             'errors'=>$errors
         ]);
     }
-    public function sendWelcomeEmail(String $firstName,String $emailAddress,String $code){
+    public function sendWelcomeEmail($firstName,$emailAddress,$code){
         $message = \Swift_Message::newInstance()
             ->setSubject('PRISK Online Portal Profile')
             ->setFrom('prisk@creative-junk.com','PRISK Online Portal Team')

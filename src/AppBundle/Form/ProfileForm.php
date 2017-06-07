@@ -290,6 +290,7 @@ class ProfileForm extends AbstractType
             ))
             ->add('nextOfKinPhoneNumber')
             ->add('nextOfKinEmail')
+            ->add('mpesaConfirmationCode')
             ->add('nextOfKinAddedDate',DateType::class,[
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker'],

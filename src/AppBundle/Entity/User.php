@@ -52,6 +52,10 @@ class User implements UserInterface
      */
     private $roles=[];
     /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $lastLoginTime;
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isActive;
@@ -81,18 +85,6 @@ class User implements UserInterface
         return $roles;
     }
 
-    /**
-     * Returns the password used to authenticate the user.
-     *
-     * This should be the encoded password. On authentication, a plain-text
-     * password will be salted, encoded, and then compared to this value.
-     *
-     * @return string The password
-     */
-    public function getPassword()
-    {
-        // TODO: Implement getPassword() method.
-    }
 
     /**
      * Returns the salt that was originally used to encode the password.
@@ -190,7 +182,26 @@ class User implements UserInterface
     {
         $this->plainPassword = $plainPassword;
     }
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
     /**
      * @return mixed
      */
@@ -205,6 +216,22 @@ class User implements UserInterface
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastLoginTime()
+    {
+        return $this->lastLoginTime;
+    }
+
+    /**
+     * @param mixed $lastLoginTime
+     */
+    public function setLastLoginTime($lastLoginTime)
+    {
+        $this->lastLoginTime = $lastLoginTime;
     }
 
 }

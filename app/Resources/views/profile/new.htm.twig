@@ -477,7 +477,29 @@
 
                         </div>
                     </fieldset>
+                    <h6>Payment</h6>
+                    <fieldset>
+                        <div class="row">
+                            <p><i>**Kindly note your registration will not be reviewed until payment is made.</i></p>
+                            <ul>
+                                <li>1. Go to Mpesa on you Phone</li>
+                                <li>2. Select <b>"Lipa na Mpesa"</b></li>
+                                <li>3. Select <b>"Paybill"</b></li>
+                                <li>4. Enter Business Number <b>"884350"</b></li>
+                                <li>5. Enter your Official Names as the Account Number</li>
+                                <li>6. Enter <b>3000</b> as the Amount and Send</li>
+                                <li>7. Enter the confirmation Code below</li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(profileForm.mpesaConfirmationCode,{
+                                    'label': 'Mpesa Confirmation Code'
+                                }) }}
+                            </div>
 
+                        </div>
+                    </fieldset>
                     {{ form_end(profileForm) }}
 
                 </div>
