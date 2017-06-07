@@ -46,6 +46,9 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+    /**
+     * @Assert\NotBlank(groups={"Registration"})
+     */
     private $plainPassword;
     /**
      * @ORM\Column(type="json_array")
