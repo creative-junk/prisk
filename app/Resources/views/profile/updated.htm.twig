@@ -25,11 +25,10 @@
                                 <div class="sppb-addon sppb-addon-text-block sppb-text-left "><h6
                                             class="sppb-addon-title" style="font-size:14px;line-height:14px;">Profile Updated</h6>
 
-                                    <div class="sppb-addon-content"> <p>Thank you for updating your profile. Your registration has been submitted for Review.
-                                            <p>You can <a class="btn bg-orange-400" href="/profile/{{ app.request.query.get("profileId") }}/edit">Edit your Profile</a>  </p>
+                                    <div class="sppb-addon-content"> <p>Thank you for updating your profile. Kindly note that your profile will not be reviewed until your mermbership fee is paid..
+                                        <p>You can <a class="btn bg-orange-400" href="/profile/{{ app.request.query.get("profileId") }}/edit">Edit your Profile</a> or <a class="btn bg-orange-400" href="{{ path('member-pay',{ id: app.request.query.get("profileId") }) }}">Pay Now</a> for your Membership </a> </p>
                                             <br/>To complete your profile, kindly send your recordings in <b>mp3</b> format to membership@prisk.or.ke.</p>
-                                        <p> We will continuously update you as the review progresses.</p>
-                                        <p>--PRISK Team</p>
+                                        <p>--Thank you</p>
                                     </div>
                                 </div>
                             </div>

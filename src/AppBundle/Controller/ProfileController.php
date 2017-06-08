@@ -172,32 +172,40 @@ class ProfileController extends Controller
         ]);
     }
     /**
-     * @Route("/profile/{id}/pay")
+     * @Route("/profile/{id}/pay",name="member-pay")
      */
-    public function makePaymentAction(Request $request,Profile $profile)
+    public function makePaymentAction(Request $request,Profile $userProfile)
     {
-        $form = $this->createForm(ProfileForm::class,$profile);
+
+        $em= $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(MpesaFormType::class,$userProfile);
+
         $form->handleRequest($request);
 
-        if($form->isValid()){
-            $profile = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($profile);
-            $em->flush();
+        if ($form->isSubmitted()&&$form->isValid()){
+            $this->container->get('session')->set('profile', $userProfile);
 
-            $this->sendWelcomeEmail($profile->getfirstName(),$profile->getEmail(),$profile->getId());
+            $amount=3000;
+            $phoneNumber = $form["phoneNumber"]->getData();
+            $referenceId = $userProfile->getIdNumber();
 
-            return $this->redirectToRoute('profile_updated',array(
-                'profileId'=>$profile->getId()
-            ));
-        }else{
-            $errors = $form->getErrors();
+            $mpesa = new Mpesa($this->container);
+
+            $response = $mpesa->request($amount)->from($phoneNumber)->usingReferenceId($referenceId)->transact();
+            $statusCode = $response->getStatusCode();
+            if ($statusCode==200) {
+                return $this->redirectToRoute('mpesa_paid');
+            }else{
+                return $this->redirectToRoute('mpesa_failed');
+            }
+
         }
 
-        return $this->render(':profile:new.htm.twig',[
-            'profileForm'=>$form->createView(),
-            'profile'=>$profile,
-            'errors'=>$errors
+        return $this->render('profile/pay.htm.twig',[
+            'profile'=>$userProfile,
+            'mpesaForm'=>$form->createView()
+
         ]);
     }
     public function sendWelcomeEmail($firstName,$emailAddress,$code){
