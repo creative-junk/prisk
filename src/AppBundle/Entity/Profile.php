@@ -282,10 +282,34 @@ class Profile
      */
     private $mpesaConfirmationCode;
     /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $mpesaPaymentDate;
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $mpesaStatus;
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $mpesaDescription;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $mpesaNumber;
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $mpesaAmount;
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $isUrlvalid;
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
-
 
     /**
      * @return mixed
@@ -1221,49 +1245,105 @@ class Profile
      */
     public function setMpesaConfirmationCode($mpesaConfirmationCode)
     {
-        if ($mpesaConfirmationCode==null){
-            $this->setIsPaid(false);
-        }else{
-            $this->setIsPaid(true);
-        }
         $this->mpesaConfirmationCode = $mpesaConfirmationCode;
     }
 
     /**
      * @return mixed
      */
-    public function getIsPaid()
+    public function getMpesaPaymentDate()
     {
-        return $this->isPaid;
+        return $this->mpesaPaymentDate;
     }
 
     /**
-     * @param mixed $isPaid
+     * @param mixed $mpesaPaymentDate
      */
-    public function setIsPaid($isPaid)
+    public function setMpesaPaymentDate($mpesaPaymentDate)
     {
-        $this->isPaid = $isPaid;
+        $this->mpesaPaymentDate = $mpesaPaymentDate;
     }
 
     /**
      * @return mixed
      */
-    public function getMpesaConfirmationCode()
+    public function getMpesaStatus()
     {
-        return $this->mpesaConfirmationCode;
+        return $this->mpesaStatus;
     }
 
     /**
-     * @param mixed $mpesaConfirmationCode
+     * @param mixed $mpesaStatus
      */
-    public function setMpesaConfirmationCode($mpesaConfirmationCode)
+    public function setMpesaStatus($mpesaStatus)
     {
-        if ($mpesaConfirmationCode==null){
-            $this->setIsPaid(false);
-        }else{
-            $this->setIsPaid(true);
-        }
-        $this->mpesaConfirmationCode = $mpesaConfirmationCode;
+        $this->mpesaStatus = $mpesaStatus;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMpesaDescription()
+    {
+        return $this->mpesaDescription;
+    }
+
+    /**
+     * @param mixed $mpesaDescription
+     */
+    public function setMpesaDescription($mpesaDescription)
+    {
+        $this->mpesaDescription = $mpesaDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMpesaNumber()
+    {
+        return $this->mpesaNumber;
+    }
+
+    /**
+     * @param mixed $mpesaNumber
+     */
+    public function setMpesaNumber($mpesaNumber)
+    {
+        $this->mpesaNumber = $mpesaNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMpesaAmount()
+    {
+        return $this->mpesaAmount;
+    }
+
+    /**
+     * @param mixed $mpesaAmount
+     */
+    public function setMpesaAmount($mpesaAmount)
+    {
+        $this->mpesaAmount = $mpesaAmount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsUrlvalid()
+    {
+        return $this->isUrlvalid;
+    }
+
+    /**
+     * @param mixed $isUrlvalid
+     */
+    public function setIsUrlvalid($isUrlvalid)
+    {
+        $this->isUrlvalid = $isUrlvalid;
+    }
+
+
 
 }

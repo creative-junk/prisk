@@ -1,0 +1,67 @@
+{% extends 'base.htm.twig' %}
+
+{% block body %}
+    <h2>Pay by Mpesa</h2>
+    {% if not mpesaForm.vars.valid %}
+
+        {# Loop through every form item #}
+        {% for child in mpesaForm.children %}
+            {# Display the errors of the form item #}
+            {%for error in child.vars.errors%}
+                <p><div class="alert alert-danger">{{error.message}}</div></p>
+            {%endfor%}
+        {%endfor%}
+
+    {%endif%}
+    {{ form_start(mpesaForm) }}
+
+    <div class="row">
+        <div class="">
+            <div class="panel registration-form">
+                <div class="panel-body">
+                    <div class="row">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="{{ asset('images/M-PESA.jpg') }}" width="150"/>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group has-feedback">
+                                {{ form_row(mpesaForm.phoneNumber,{
+                                    'label': 'Mpesa Number to Pay With.'
+                                }) }}
+                                <div class="form-control-feedback">
+                                    <i class="icon-user-plus text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h6>How to Pay</h6>
+                        <ul style="list-style: none">
+                            <li>1. Confirm your Mpesa Number in the box above </li>
+                            <li>2. Click the Continue below</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="text-right">
+
+                        <button type="submit" style="background-color: #fd9614" class="btn bg-teal-400 btn-labeled btn-labeled-right ml-10" formnovalidate><b><i
+                                        class="icon-plus3"></i></b> Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /registration form -->
+
+
+    {{ form_end(mpesaForm) }}
+
+
+{% endblock %}
+
+
+

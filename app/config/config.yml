@@ -99,3 +99,13 @@ vich_uploader:
                 inject_on_load:     false
                 delete_on_update:   true
                 delete_on_remove:   true
+
+#Crysoft Mpesa Bundle
+crysoft_mpesa:
+    mpesa:
+        endpoint:           https://safaricom.co.ke/mpesa_online/lnmo_checkout_server.php?wsdl                   # The M-Pesa API Endpoint.
+        callback_url:       http://portal.prisk.or.ke/member/mpesa/success                # The callback URL to be queried on transaction completion.
+        callback_method:    POST               # The callback method to be used.
+        paybill_number:     884350                # The merchant's Paybill number.
+        pass_key:           1c54cb3be3df883ccbb1e29777cce4e096280a22e3a19e0ee067cb841ab86df3                     # The SAG Passkey given on registration.
+

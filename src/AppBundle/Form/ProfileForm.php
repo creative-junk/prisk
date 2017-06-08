@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -16,13 +17,6 @@ class ProfileForm extends AbstractType
             ->add('firstName')
             ->add('middleName')
             ->add('lastName')
-            ->add('ipn')
-            ->add('memberNumber',null,[
-                'attr'=>[
-                    'placeholder' => 'PXXX',
-                    'disabled'      => true
-                ]
-            ])
             ->add('prefix', ChoiceType::class, [
                 'choices' => array(
                     'Mr' => 'Mr',
@@ -170,7 +164,11 @@ class ProfileForm extends AbstractType
                     'Liberia' => 'Liberia',
                 )
             ))
-            ->add('phoneNumber')
+            ->add('phoneNumber',null,[
+                'attr'=>[
+                    'placeholder'=>'254720123456'
+                ]
+            ])
             ->add('altPhoneNumber')
             ->add('faxNumber')
             ->add('emailAddress')
@@ -289,7 +287,6 @@ class ProfileForm extends AbstractType
             ))
             ->add('nextOfKinPhoneNumber')
             ->add('nextOfKinEmail')
-            ->add('mpesaConfirmationCode')
             ->add('nextOfKinAddedDate',DateType::class,[
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker'],
