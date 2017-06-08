@@ -118,6 +118,10 @@ class ProfileController extends Controller
     public function payFailedAction(Request $request){
 
     }
+
+    /**
+     * @Route("/profile/mpesa/verify",name="verify-payment")
+     */
     public function completePaymentAction(Request $request){
         $profile = $this->container->get('session')->get('profile');
 
@@ -255,6 +259,8 @@ class ProfileController extends Controller
         $user->setMpesaPaymentDate($trasactionDate);
         $user->setMpesaStatus($mpesaStatus);
         $user->setIsPaid(true);
+        $user->setMpesaNumber($customerNumber);
+        $user->setMpesaAmount($amount);
     }
     /**
      * @Route("/member/mpesa/fail", name="mpesa-success")
