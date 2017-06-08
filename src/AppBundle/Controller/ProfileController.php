@@ -7,6 +7,7 @@ use AppBundle\Entity\Profile;
 use AppBundle\Form\MpesaFormType;
 use AppBundle\Form\ProfileForm;
 use Crysoft\MpesaBundle\Helpers\Mpesa;
+use Crysoft\MpesaBundle\Helpers\MpesaStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,14 +84,20 @@ class ProfileController extends Controller
         if ($form->isSubmitted()&&$form->isValid()){
             $this->container->get('session')->set('profile', $userProfile);
 
-            $amount=3000;
+            $amount=10;
             $phoneNumber = $form["phoneNumber"]->getData();
             $referenceId = $userProfile->getIdNumber();
 
             $mpesa = new Mpesa($this->container);
 
-            $response = $mpesa->request($amount)->from($phoneNumber)->usingReferenceId($referenceId)->transact();
+            $transactionId = $mpesa->generateTransactionNumber();
+
+            $response = $mpesa->request($amount)->from($phoneNumber)->usingReferenceId($referenceId)->usingTransactionId($transactionId)->transact();
+
             $statusCode = $response->getStatusCode();
+
+            $this->container->get('session')->set('transactionId', $transactionId);
+
             if ($statusCode==200) {
                 return $this->redirectToRoute('mpesa_paid');
             }else{
@@ -123,23 +130,53 @@ class ProfileController extends Controller
      * @Route("/profile/mpesa/verify",name="verify-payment")
      */
     public function completePaymentAction(Request $request){
+
+        $mpesa = new Mpesa($this->container);
+
+
         $profile = $this->container->get('session')->get('profile');
+        $transactionId = $this->container->get('session')->get('transactionId');
 
         $em= $this->getDoctrine()->getManager();
 
-        $userProfile = $em->getRepository("AppBundle:Profile")
+        $user = $em->getRepository("AppBundle:Profile")
             ->findOneBy([
                 'id'=>$profile->getId()
             ]);
-        if ($userProfile->getStatus()=="Success"){
+
+
+        $response = $mpesa->usingTransactionId($transactionId)->requestStatus();
+
+        $mpesaStatus = new MpesaStatus($response);
+
+        $customerNumber             =       $mpesaStatus->getCustomerNumber();
+        $transactionAmount          =       $mpesaStatus->getTransactionAmount();
+        $transactionStatus          =       $mpesaStatus->getTransactionStatus();
+        $transactionDate            =       $mpesaStatus->getTransactionDate();
+        $mPesaTransactionId         =       $mpesaStatus->getMpesaTransactionId();
+        $merchantTransactionId      =       $mpesaStatus->getMerchantTransactionId();
+        $transactionDescription     =       $mpesaStatus->getTransactionDescription();
+
+
+
+
+        if ($transactionStatus=="Success"){
             $success = "Success";
-        }else if ($userProfile->getStatus()==""){
-            $success = "Pending";
+            $user->setMpesaConfirmationCode($mPesaTransactionId);
+            $user->setMpesaDescription($transactionDescription);
+            $user->setMpesaPaymentDate($transactionDate);
+            $user->setMpesaStatus($transactionStatus);
+            $user->setIsPaid(true);
+            $user->setMpesaNumber($customerNumber);
+            $user->setMpesaAmount($transactionAmount);
+            $em->persist($user);
+            $em->flush();
+
         }else{
             $success = "Failed";
         }
         return $this->render(':profile:verification.htm.twig',[
-            'profile'=>$userProfile,
+            'profile'=>$user,
             'success'=>$success
         ]);
     }
@@ -186,14 +223,20 @@ class ProfileController extends Controller
         if ($form->isSubmitted()&&$form->isValid()){
             $this->container->get('session')->set('profile', $userProfile);
 
-            $amount=3000;
+            $amount=10;
             $phoneNumber = $form["phoneNumber"]->getData();
             $referenceId = $userProfile->getIdNumber();
 
             $mpesa = new Mpesa($this->container);
 
-            $response = $mpesa->request($amount)->from($phoneNumber)->usingReferenceId($referenceId)->transact();
+            $transactionId = $mpesa->generateTransactionNumber();
+
+            $response = $mpesa->request($amount)->from($phoneNumber)->usingReferenceId($referenceId)->usingTransactionId($transactionId)->transact();
+
             $statusCode = $response->getStatusCode();
+
+            $this->container->get('session')->set('transactionId', $transactionId);
+
             if ($statusCode==200) {
                 return $this->redirectToRoute('mpesa_paid');
             }else{
@@ -269,6 +312,9 @@ class ProfileController extends Controller
         $user->setIsPaid(true);
         $user->setMpesaNumber($customerNumber);
         $user->setMpesaAmount($amount);
+
+        $em->persist($user);
+        $em->flush();
     }
     /**
      * @Route("/member/mpesa/fail", name="mpesa-success")
@@ -292,5 +338,7 @@ class ProfileController extends Controller
         $user->setMpesaPaymentDate($trasactionDate);
         $user->setMpesaStatus($mpesaStatus);
         $user->setIsPaid(false);
+        $em->persist($user);
+        $em->flush();
     }
 }

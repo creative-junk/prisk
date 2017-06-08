@@ -92,6 +92,7 @@ class Mpesa
      * @var string
      */
     protected $transactionNumber;
+
     /**
      * The Guzzle Client used to make the request to the endpoint
      *
@@ -172,7 +173,17 @@ class Mpesa
 
         return $this;
     }
+    /**
+     * Set the Transaction number to bill the account
+     * @param string $transactionId
+     * @return $this
+     */
+    public function usingTransactionId($transactionId)
+    {
+        $this->transactionNumber = $transactionId;
 
+        return $this;
+    }
     /**
      * Initiate the transaction
      *
@@ -180,6 +191,14 @@ class Mpesa
      */
     public function transact(){
         return $this->process($this->amount,$this->number,$this->referenceId);
+    }
+    /**
+     * Initiate the request
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function requestStatus(){
+        return $this->status($this->referenceId);
     }
 
     /**
@@ -189,11 +208,11 @@ class Mpesa
     {
         $config = $this->container->getParameter('crysoft_mpesa.config');
 
-        $this->endPoint = $config['mpesa']['endpoint'];
-        $this->callbackUrl = $config['mpesa']['callback_url'];
-        $this->callbackMethod = $config['mpesa']['callback_method'];
-        $this->paybillNumber = $config['mpesa']['paybill_number'];
-        $this->passKey = $config['mpesa']['pass_key'];
+        $this->endPoint         = $config['mpesa']['endpoint'];
+        $this->callbackUrl      = $config['mpesa']['callback_url'];
+        $this->callbackMethod   = $config['mpesa']['callback_method'];
+        $this->paybillNumber    = $config['mpesa']['paybill_number'];
+        $this->passKey          = $config['mpesa']['pass_key'];
     }
 
     /**
@@ -213,6 +232,19 @@ class Mpesa
         return $this->handle();
     }
 
+    /**
+     * Request for the transaction status
+     *
+     * @param $transactionId
+     * @return mixed | \Psr\Http\Message\ResponseInterface
+     */
+    protected function status($transactionId){
+        $this->referenceId = $transactionId;
+        $this->initialize();
+
+        return $this->handleStatusRequest();
+
+    }
     /**
      * Initialize the transaction
      */
@@ -236,6 +268,17 @@ class Mpesa
         $this->generateRequest('process.xml');
 
         return $this->send();
+    }
+    /**
+     * Validate and Handle the transaction Status Request
+     * @return mixed | \Psr\Http\Message\ResponseInterface
+     */
+    protected function handleStatusRequest()
+    {
+        //$this->validateKeys();
+        $this->generateRequest('status.xml');
+
+        return $this->execute();
     }
 
     /**
@@ -261,17 +304,20 @@ class Mpesa
 
     protected function setupKeys()
     {
+
         $this->keys = [
-            'CM_PAYBILL'     => $this->paybillNumber,
-            'CM_PASSWORD'    => $this->password,
-            'CM_TIMESTAMP'   => $this->timestamp,
-            'CM_TRANS_ID'    => $this->generateTransactionNumber(),
-            'CM_REF_ID'      => $this->referenceId,
-            'CM_AMOUNT'      => $this->amount,
-            'CM_NUMBER'      => $this->number,
-            'CM_CALLBACK_URL'    => $this->callbackUrl,
-            'CM_CALLBACK_METHOD' => $this->callbackMethod,
+            'CM_PAYBILL'          => $this->paybillNumber,
+            'CM_PASSWORD'         => $this->password,
+            'CM_TIMESTAMP'        => $this->timestamp,
+            'CM_TRANS_ID'         => $this->transactionNumber,
+            'CM_TRANSACTION_ID'   => $this->transactionNumber,
+            'CM_REF_ID'           => $this->referenceId,
+            'CM_AMOUNT'           => $this->amount,
+            'CM_NUMBER'           => $this->number,
+            'CM_CALLBACK_URL'     => $this->callbackUrl,
+            'CM_CALLBACK_METHOD'  => $this->callbackMethod,
         ];
+       // var_dump($this->keys['CM_TRANS_ID']);exit;
     }
 
     protected function validateKeys()
@@ -305,6 +351,30 @@ class Mpesa
             'body'=>  $this->request
         ]);
         $this->validateResponse($response);
+        return $response;
+    }
+    /**
+     * Execute the Status Request
+     *
+     * @return mixed | \Psr\Http\Message\ResponseInterface
+     */
+
+    protected function execute()
+    {
+       /* $response = $this->client->request('GET',$this->endPoint,[
+            'body'=>  $this->request
+        ]);*/
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->endPoint);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_VERBOSE, '0');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->request);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, '0');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, '0');
+        $response = curl_exec($ch);
+        curl_close($ch);
+
         return $response;
     }
 
