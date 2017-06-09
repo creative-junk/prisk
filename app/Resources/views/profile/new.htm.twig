@@ -35,6 +35,16 @@
                 }
             );
         });
+        jQuery(document).ready(function() {
+            $('.js-sincepicker').datepicker(
+                {
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'yy-mm-dd',
+
+                }
+            );
+        });
     </script>
     <script src="{{ asset('loko/mod_vina_treeview_menus/assets/js/jquery.cookie.js') }}"
             type="text/javascript"></script>

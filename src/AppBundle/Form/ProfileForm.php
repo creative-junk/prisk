@@ -289,7 +289,7 @@ class ProfileForm extends AbstractType
             ->add('nextOfKinEmail')
             ->add('nextOfKinAddedDate',DateType::class,[
                 'widget' => 'single_text',
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => ['class' => 'js-sincepicker'],
                 'html5' => false,
 
             ]);

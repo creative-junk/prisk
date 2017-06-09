@@ -146,7 +146,7 @@ class ProfileController extends Controller
 
 
         $response = $mpesa->usingTransactionId($transactionId)->requestStatus();
-
+        //var_dump($response);exit;
         $mpesaStatus = new MpesaStatus($response);
 
         $customerNumber             =       $mpesaStatus->getCustomerNumber();
@@ -160,11 +160,12 @@ class ProfileController extends Controller
 
 
 
+
         if ($transactionStatus=="Success"){
             $success = "Success";
             $user->setMpesaConfirmationCode($mPesaTransactionId);
             $user->setMpesaDescription($transactionDescription);
-            $user->setMpesaPaymentDate($transactionDate);
+            $user->setMpesaPaymentDate(new \DateTime($transactionDate));
             $user->setMpesaStatus($transactionStatus);
             $user->setIsPaid(true);
             $user->setMpesaNumber($customerNumber);

@@ -14,18 +14,22 @@
                         <div class="col-md-3">
                             <img src="{{ asset('images/M-PESA.jpg') }}" width="150"/>
                         </div>
-                        {% if success =="success" %}
+                        {% if success =="Success" %}
                         <h6>Payment received</h6>
                         <p>Thank you for your payment. Below are the details of your payment.</p>
-                        <ul style="list-style: none">
+                    </div>
+                    <div class="row">
+
+                    <ul style="list-style: none">
                             <li> <b>Mpesa Confirmation Code:</b> {{ profile.mpesaConfirmationCode }}</li>
+                            <li> <b>Mpesa Transaction Status:</b> {{ profile.mpesaStatus }}</li>
                             <li> <b>Mpesa Description:</b> {{ profile.mpesaDescription }} </li>
-                            <li> <b>Mpesa Payment Date:</b> {{ profile.mpesaPaymentDate }}  </li>
+                            <li> <b>Mpesa Payment Date:</b> {{ profile.mpesaPaymentDate | date('Y-m-d H:i:s')  }}  </li>
                             <li> <b>Mpesa Number:</b> {{ profile.mpesaNumber }}</li>
                             <li> <b>Amount:</b> {{ profile.mpesaAmount }}</li>
 
                         </ul>
-                        {% elseif success == "failed" %}
+                        {% elseif success == "Failed" %}
                         <h6>Payment Failed</h6>
                         <p>Oops Something went wrong with your payment. Kindly <a style="color: #00a5bb" href="{{ path('pay_mpesa') }}"> Click here</a> to try again.</p>
 
