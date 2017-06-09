@@ -64,6 +64,10 @@ class User implements UserInterface
     private $isActive;
 
     /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $isPasswordCreated;
+    /**
      * Returns the roles granted to the user.
      *
      * <code>
@@ -235,6 +239,22 @@ class User implements UserInterface
     public function setLastLoginTime($lastLoginTime)
     {
         $this->lastLoginTime = $lastLoginTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsPasswordCreated()
+    {
+        return $this->isPasswordCreated;
+    }
+
+    /**
+     * @param mixed $isPasswordCreated
+     */
+    public function setIsPasswordCreated($isPasswordCreated)
+    {
+        $this->isPasswordCreated = $isPasswordCreated;
     }
 
 }

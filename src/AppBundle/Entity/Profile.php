@@ -307,6 +307,14 @@ class Profile
      */
     private $isUrlvalid;
     /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $profileStatus;
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $statusDescription;
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -1342,6 +1350,38 @@ class Profile
     public function setIsUrlvalid($isUrlvalid)
     {
         $this->isUrlvalid = $isUrlvalid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfileStatus()
+    {
+        return $this->profileStatus;
+    }
+
+    /**
+     * @param mixed $profileStatus
+     */
+    public function setProfileStatus($profileStatus)
+    {
+        $this->profileStatus = $profileStatus;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatusDescription()
+    {
+        return $this->statusDescription;
+    }
+
+    /**
+     * @param mixed $statusDescription
+     */
+    public function setStatusDescription($statusDescription)
+    {
+        $this->statusDescription = $statusDescription;
     }
 
 

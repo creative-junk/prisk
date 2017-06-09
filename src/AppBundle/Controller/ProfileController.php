@@ -31,7 +31,7 @@ class ProfileController extends Controller
         $profile->setIdNumber($onboard->getIdNumber());
         $profile->setStageName($onboard->getStageName());
         $profile->setEmailAddress($onboard->getEmail());
-
+        $profile->setProfileStatus("Pending");
 
         $profile->setCreatedAt(new \DateTimeImmutable());
         $form = $this->createForm(ProfileForm::class,$profile);
