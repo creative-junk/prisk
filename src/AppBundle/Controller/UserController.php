@@ -160,5 +160,11 @@ class UserController extends Controller
             'errors'=>$errors
         ]);
     }
+    /**
+     * @Route("/logout",name="user_logout")
+     */
+    public function logoutAction(){
+        throw new \Exception('This should not be reached');
+    }
 
 }

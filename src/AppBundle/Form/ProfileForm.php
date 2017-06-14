@@ -181,7 +181,7 @@ class ProfileForm extends AbstractType
                     'Bank of Africa' => 'Bank of Africa',
                     'Bank of Baroda' => 'Bank of Baroda',
                     'Bank of India' => 'Bank of India',
-                    'Barclays Bank' => 'Barclays Ban',
+                    'Barclays Bank' => 'Barclays Bank',
                     'CFC Stanbic Bank' => 'CFC Stanbic Bank',
                     'Chase Bank' => 'Chase Bank',
                     'Citibank NA' => 'Citibank NA',

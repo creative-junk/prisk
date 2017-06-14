@@ -27,16 +27,20 @@
     <link rel="stylesheet" href="{{ asset('axa/assets/styles/app.css') }}" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="{{ asset('axa/assets/fonts/roboto/font.css') }}" type="text/css" />
+    <!-- style -->
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('axa/libs/jquery/plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" type="text/css" />
+
 </head>
 <body>
 <div class="app" id="app">
 
     <!-- ############ LAYOUT START-->
-
+    {% block left %}
     <!-- aside -->
     {{ include(':partials/admin:left.htm.twig') }}
     <!-- / -->
-
+    {% endblock %}
     <!-- content -->
     {% block body %} {% endblock %}
     <!-- / -->
@@ -48,18 +52,9 @@
 <!-- build:js scripts/app.html.js -->
 <!-- jQuery -->
 <script src="{{ asset('axa/libs/jquery/jquery/dist/jquery.js') }}"></script>
-<!-- Bootstrap -->
-<script src="{{ asset('axa/libs/jquery/tether/dist/js/tether.min.js') }}"></script>
-<script src="{{ asset('axa/libs/jquery/bootstrap/dist/js/bootstrap.js') }}"></script>
-<!-- core -->
-<script src="{{ asset('axa/libs/jquery/underscore/underscore-min.js') }}"></script>
-<script src="{{ asset('axa/libs/jquery/jQuery-Storage-API/jquery.storageapi.min.js') }}"></script>
-<script src="{{ asset('axa/libs/jquery/PACE/pace.min.js') }}"></script>
 
-<script src="{{ asset('axa/scripts/config.lazyload.js') }}"></script>
 
-<script src="{{ asset('axa/scripts/palette.js') }}"></script>
-<script src="{{ asset('axa/scripts/ui-load.js') }}"></script>
+
 <script src="{{ asset('axa/scripts/ui-jp.js') }}"></script>
 <script src="{{ asset('axa/scripts/ui-include.js') }}"></script>
 <script src="{{ asset('axa/scripts/ui-device.js') }}"></script>
@@ -69,11 +64,18 @@
 <script src="{{ asset('axa/scripts/ui-scroll-to.js') }}"></script>
 <script src="{{ asset('axa/scripts/ui-toggle-class.js') }}"></script>
 
-<script src="{{ asset('axa/scripts/app.js') }}"></script>
 
-<!-- ajax -->
-<script src="{{ asset('axa/libs/jquery/jquery-pjax/jquery.pjax.js') }}"></script>
-<script src="{{ asset('axa/scripts/ajax.js') }}"></script>
+
+<script src="{{ asset('axa/libs/jquery/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('axa/libs/jquery/plugins/integration/bootstrap/3/dataTables.bootstrap.js') }}"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+$('#data').DataTable();
+});
+</script>
+{% block javascripts %}
+{% endblock %}
 <!-- endbuild -->
 </body>
 </html>

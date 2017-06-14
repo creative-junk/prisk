@@ -11,9 +11,19 @@
 namespace AppBundle\Repository;
 
 
+use AppBundle\Entity\Recording;
 use Doctrine\ORM\EntityRepository;
 
 class RecordingRepository extends EntityRepository
 {
+    /**
+     * @return Recording[]
+     */
+    public function findAllRecordings(){
 
+        return $this->createQueryBuilder('user')
+            ->orderBy('user.createdAt','DESC')
+            ->getQuery()
+            ->execute();
+    }
 }

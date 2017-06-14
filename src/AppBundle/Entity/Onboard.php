@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @Doctrine\ORM\Mapping\Entity
+ * @Doctrine\ORM\Mapping\Entity(repositoryClass="AppBundle\Repository\OnboardRepository")
  * @Doctrine\ORM\Mapping\Table(name="onboard")
  * @UniqueEntity(fields={"email"},message="You have already registered.")
  */
@@ -183,6 +183,13 @@ class Onboard
     {
         $this->createdAt = $createdAt;
     }
+    public function __toString()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
 
+    public function getFullName(){
+        return trim($this->getFirstName() . ' ' . $this->getLastName());
+    }
 
 }

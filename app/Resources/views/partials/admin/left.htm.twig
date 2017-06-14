@@ -21,9 +21,7 @@
                     <li>
                         <a href="{{ path('admin-home') }}" >
                     <span class="nav-icon">
-                      <i class="material-icons">&#xe3fc;
-                        <span ui-include="{{ asset('axa/assets/images/i_0.svg') }}"></span>
-                      </i>
+                    <i class="material-icons">&#xE871;</i>
                     </span>
                             <span class="nav-text">Dashboard</span>
                         </a>
@@ -35,37 +33,76 @@
                       <i class="fa fa-caret-down"></i>
                     </span>
                             <span class="nav-label">
-                      <b class="label rounded label-sm primary">5</b>
+
                     </span>
                             <span class="nav-icon">
-                      <i class="material-icons">&#xe5c3;
-                        <span ui-include="{{ asset('axa/assets/images/i_1.svg') }}"></span>
-                      </i>
+                      <i class="material-icons">&#xE853;</i>
                     </span>
                             <span class="nav-text">Users</span>
                         </a>
                         <ul class="nav-sub">
                             <li>
-                                <a href="inbox.html" >
+                                <a href="{{ path('new-users') }}" >
                                     <span class="nav-text">Registered</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="contact.html" >
-                                    <span class="nav-text">Onboarded</span>
+                                <a href="{{ path('onboarded-users') }}" >
+                                    <span class="nav-text">User Profiles</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="calendar.html" >
-                                    <span class="nav-text">Approved</span>
+                                <a href="{{ path('approved-users') }}" >
+                                    <span class="nav-text">Approved Users</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('rejected-users') }}" >
+                                    <span class="nav-text">Rejected Profiles</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('pending-accounts') }}" >
+                                    <span class="nav-text">Pending Accounts</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a>
+                    <span class="nav-caret">
+                      <i class="fa fa-caret-down"></i>
+                    </span>
+                            <span class="nav-label">
+
+                    </span>
+                            <span class="nav-icon">
+                    <i class="material-icons">&#xE8E8;</i>
+                    </span>
+                            <span class="nav-text">Administrators</span>
+                        </a>
+                        <ul class="nav-sub">
+                            <li>
+                                <a href="{{ path('admin-accounts') }}" >
+                                    <span class="nav-text">Administrators</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('pending-admin-accounts') }}" >
+                                    <span class="nav-text">Requested Accounts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('new-administrator') }}" >
+                                    <span class="nav-text">New Admin Account</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
-
                     <li>
-                        <a href="widget.html" >
+                        <a href="#" >
                     <span class="nav-icon">
                       <i class="material-icons">&#xe8d2;
                         <span ui-include="'../assets/images/i_3.svg'"></span>

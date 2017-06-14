@@ -1,15 +1,15 @@
 {% extends 'adminBase.htm.twig' %}
-{% block title %}Approved Users{% endblock %}
+{% block title %}Pending Accounts{% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
-        jQuery('#js-create-account').on('click',function (e)  {
+        jQuery('#js-remind-account').on('click',function (e)  {
             //Prevent Normal Submit
             e.preventDefault();
 
             $(".messages").fadeOut("slow");
 
-            $(this).find('.fa-plus-circle')
-                .removeClass('fa-plus-circle')
+            $(this).find('.fa-envelope')
+                .removeClass('fa-envelope')
                 .addClass('fa-spinner')
                 .addClass('fa-spin');
 
@@ -29,7 +29,7 @@
                 //$el.fadeOut("slow");
                 $(".messages").fadeIn("slow");
 
-                $("#create-account")
+                $("#remind")
                     .removeClass('fa-spinner')
                     .removeClass('fa-spin')
                     .addClass('fa-check');
@@ -37,7 +37,7 @@
                 //$el.fadeOut("slow");
                 $(".errors").fadeIn("slow");
 
-                $("#create-account")
+                $("#remind")
                     .removeClass('fa-spinner')
                     .removeClass('fa-spin')
                     .addClass('fa-times');
@@ -59,7 +59,7 @@
                     <div class="messages" style="">
                         <div class="alert alert-success">
                             <div>
-                                Account Created successfully.
+                                User reminded successfully.
                             </div>
                         </div>
 
@@ -69,7 +69,7 @@
                     <div class="errors" style="">
                         <div class="alert alert-danger">
                             <div>
-                               :-( Something went wrong. An Account might already exist for this profile.
+                               :-( Something went wrong.
                             </div>
                         </div>
 
@@ -77,15 +77,13 @@
                 </div>
                 <div class="box">
                     <div class="box-header">
-                        <h2>Approved Profiles</h2>
+                        <h2>Pending Accounts</h2>
                     </div>
                     <div class="table-responsive">
                         <table id="data" class="table table-striped b-t b-b">
                             <thead>
                             <tr>
                                 <th  style="width:20%">Names</th>
-                                <th  style="width:15%">Stage Name</th>
-                                <th  style="width:15%">ID Number</th>
                                 <th  style="width:15%">Email</th>
                                 <th  style="width:25%">Created At</th>
                                 <th  style="width:25%">Manage</th>
@@ -94,18 +92,14 @@
                             <tbody>
                             {% for user in users  %}
                                 <tr>
-                                    <td><a style="color:#0cc2aa" href="{{ path('review-profile',{'id': user.id }) }}">{{ user.fullName }}</a></td>
-                                    <td>{{ user.stageName }}</td>
-                                    <td>{{ user.idNumber }}</td>
-                                    <td>{{ user.emailAddress }}</td>
-                                    <td>{{ user.createdAt | date("F jS \\a\\t g:ia") }}</td>
+                                    <td><a style="color:#0cc2aa" href="{{ path('review-profile',{'id': user.myProfile.id }) }}">{{ user.fullName }}</a></td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.profileLinkedAt | date("F jS \\a\\t g:ia") }}</td>
                                     <td>
-                                        <a href="{{ path('review-profile',{'id': user.id }) }}"
+                                        <a href="{{ path('review-profile',{'id': user.myProfile.id }) }}"
                                            class="btn btn-xs white btn-icon"><i title="Export" class="fa fa-file-pdf-o"></i></a>
-                                       {% if user.accountCreated=="" %}
-                                        <a id="js-create-account" href="#" data-url="{{ path('create-account',{'id': user.id }) }}"
-                                           class="btn btn-xs white btn-icon"><i title="Create Account" id="create-account" class="fa fa-plus-circle"></i></a>
-                                       {% endif %}
+                                        <a id="js-remind-account" href="#" data-url="{{ path('review-profile',{'id': user.id }) }}"
+                                           class="btn btn-xs white btn-icon"><i id="remind" title="Remind Member" class="fa fa-envelope"></i></a>
                                     </td>
                                 </tr>
                             {% endfor  %}

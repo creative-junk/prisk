@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProfileRepository")
  * @ORM\Table(name="profile")
  * @UniqueEntity(fields={"emailAddress"},message="You have already successfully updated your profile.")
  */
@@ -315,10 +315,27 @@ class Profile
      */
     private $statusDescription;
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $createdAt;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $processedBy;
 
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $processedAt;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $accountCreated;
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User",mappedBy="myProfile")
+     */
+    private $whoseProfile;
     /**
      * @return mixed
      */
@@ -1384,6 +1401,77 @@ class Profile
         $this->statusDescription = $statusDescription;
     }
 
+    public function __toString()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
 
+    public function getFullName(){
+        return trim($this->getFirstName() . ' ' . $this->getLastName());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProcessedBy()
+    {
+        return $this->processedBy;
+    }
+
+    /**
+     * @param mixed $processedBy
+     */
+    public function setProcessedBy($processedBy)
+    {
+        $this->processedBy = $processedBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProcessedAt()
+    {
+        return $this->processedAt;
+    }
+
+    /**
+     * @param mixed $processedAt
+     */
+    public function setProcessedAt($processedAt)
+    {
+        $this->processedAt = $processedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccountCreated()
+    {
+        return $this->accountCreated;
+    }
+
+    /**
+     * @param mixed $accountCreated
+     */
+    public function setAccountCreated($accountCreated)
+    {
+        $this->accountCreated = $accountCreated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWhoseProfile()
+    {
+        return $this->whoseProfile;
+    }
+
+    /**
+     * @param mixed $whoseProfile
+     */
+    public function setWhoseProfile($whoseProfile)
+    {
+        $this->whoseProfile = $whoseProfile;
+    }
 
 }

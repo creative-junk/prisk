@@ -1,5 +1,7 @@
 {% extends 'adminBase.htm.twig' %}
 {% block title %}Administration Login{% endblock %}
+{% block left %}
+{% endblock %}
 {% block body %}
     <!-- ############ LAYOUT START-->
     <div class="center-block w-xxl w-auto-xs p-y-md">
@@ -30,7 +32,7 @@
 
         <div class="p-v-lg text-center">
             <div class="m-b"><a ui-sref="access.forgot-password" href="#" class="text-primary _600">Forgot password?</a></div>
-            <div>Do not have an account? <a ui-sref="access.signup" href="#" class="text-primary _600">Request One</a></div>
+            <div>Do not have an account? <a ui-sref="access.signup" href="{{ path('request-admin-account') }}" class="text-primary _600">Request One</a></div>
         </div>
     </div>
 

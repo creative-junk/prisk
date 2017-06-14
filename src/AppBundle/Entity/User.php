@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @Doctrine\ORM\Mapping\Entity
+ * @Doctrine\ORM\Mapping\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @Doctrine\ORM\Mapping\Table(name="user")
  * @UniqueEntity(fields={"email"},message="You have already registered. Thank you being part of PRISK")
  */
@@ -68,6 +68,42 @@ class User implements UserInterface
      */
     private $isPasswordCreated;
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Profile",inversedBy="whoseProfile")
+     */
+    private $myProfile;
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $profileLinkedAt;
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $accountCreatedAt;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $accountCreatedBy;
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $passwordResetToken;
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $isResetTokenValid;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $approvedBy;
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Returns the roles granted to the user.
      *
      * <code>
@@ -91,7 +127,10 @@ class User implements UserInterface
         }
         return $roles;
     }
-
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
 
     /**
      * Returns the salt that was originally used to encode the password.
@@ -255,6 +294,126 @@ class User implements UserInterface
     public function setIsPasswordCreated($isPasswordCreated)
     {
         $this->isPasswordCreated = $isPasswordCreated;
+    }
+    public function __toString()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    public function getFullName(){
+        return trim($this->getFirstName() . ' ' . $this->getLastName());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyProfile()
+    {
+        return $this->myProfile;
+    }
+
+    /**
+     * @param mixed $myProfile
+     */
+    public function setMyProfile($myProfile)
+    {
+        $this->myProfile = $myProfile;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfileLinkedAt()
+    {
+        return $this->profileLinkedAt;
+    }
+
+    /**
+     * @param mixed $profileLinkedAt
+     */
+    public function setProfileLinkedAt($profileLinkedAt)
+    {
+        $this->profileLinkedAt = $profileLinkedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccountCreatedAt()
+    {
+        return $this->accountCreatedAt;
+    }
+
+    /**
+     * @param mixed $accountCreatedAt
+     */
+    public function setAccountCreatedAt($accountCreatedAt)
+    {
+        $this->accountCreatedAt = $accountCreatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPasswordResetToken()
+    {
+        return $this->passwordResetToken;
+    }
+
+    /**
+     * @param mixed $passwordResetToken
+     */
+    public function setPasswordResetToken($passwordResetToken)
+    {
+        $this->passwordResetToken = $passwordResetToken;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsResetTokenValid()
+    {
+        return $this->isResetTokenValid;
+    }
+
+    /**
+     * @param mixed $isResetTokenValid
+     */
+    public function setIsResetTokenValid($isResetTokenValid)
+    {
+        $this->isResetTokenValid = $isResetTokenValid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccountCreatedBy()
+    {
+        return $this->accountCreatedBy;
+    }
+
+    /**
+     * @param mixed $accountCreatedBy
+     */
+    public function setAccountCreatedBy($accountCreatedBy)
+    {
+        $this->accountCreatedBy = $accountCreatedBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApprovedBy()
+    {
+        return $this->approvedBy;
+    }
+
+    /**
+     * @param mixed $approvedBy
+     */
+    public function setApprovedBy($approvedBy)
+    {
+        $this->approvedBy = $approvedBy;
     }
 
 }
