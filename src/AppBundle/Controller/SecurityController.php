@@ -55,6 +55,37 @@ class SecurityController extends Controller
         ]);
     }
     /**
+     * @Route("/account/admin/{id}/activate",name="user-activate-account")
+     */
+    public function adminFirstLoginAction(Request $request,User $user){
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(ResetPasswordForm::class,$user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $user=$form->getData();
+            $user->setIsPasswordCreated(true);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->render('user/adminAccountUpdated.htm.twig');
+        }
+
+        if ($user->getIsPasswordCreated()){
+            $activated = true;
+        }else{
+            $activated = false;
+        }
+
+        return $this->render('user/adminAactivate.htm.twig',[
+            'user'=>$user,
+            'activationForm'=>$form->createView(),
+            'isActivated'=>$activated
+        ]);
+    }
+    /**
      * @Route("/account/{code}/reset-password",name="user-reset-password")
      */
     public function resetPasswordAction(Request $request,$code){
