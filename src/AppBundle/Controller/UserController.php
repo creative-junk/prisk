@@ -2,31 +2,43 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\NextOfKin;
+use AppBundle\Entity\Profile;
 use AppBundle\Entity\Recording;
+use AppBundle\Form\NextOfKinForm;
+use AppBundle\Form\ProfileForm;
 use AppBundle\Form\RecordingForm;
 use AppBundle\Form\RecordingMp3FormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
+/**
+ * @Route("/home")
+ * @Security("is_granted('ROLE_USER')")
+ *
+ */
 class UserController extends Controller
 {
     /**
-     * @Route("/login",name="login")
-     */
-    public function loginAction(){
-        return $this->render('onboard/onboarded.htm.twig');
-    }
-    /**
-     * @Route("/home",name="home")
+     * @Route("/",name="home")
      */
     public function dashboardAction(){
-        return $this->render('home/home.htm.twig');
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $profile = $user->getMyProfile();
+
+        if (!$profile){
+            $profile = "";
+        }
+
+        return $this->render('home/home.htm.twig',[
+            'profile'=>$profile
+        ]);
     }
     /**
-     * @Route("/home/recordings",name="my-recordings")
+     * @Route("/recordings",name="my-recordings")
      */
-    public function myRecordings(Request $request){
+    public function myRecordingsAction(Request $request){
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -51,7 +63,7 @@ class UserController extends Controller
         ]);
     }
     /**
-     * @Route("/home/recording/new",name="add-recording")
+     * @Route("/recording/new",name="add-recording")
      */
     public function addRecordingAction(Request $request){
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -86,7 +98,7 @@ class UserController extends Controller
 
     }
     /**
-     * @Route("/home/recording/{id}/edit",name="edit-recording")
+     * @Route("/recording/{id}/edit",name="edit-recording")
      */
     public function editRecordingAction(Request $request,Recording $recording){
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -116,7 +128,7 @@ class UserController extends Controller
 
     }
     /**
-     * @Route("/home/recording/view/{id}",name="view-recording")
+     * @Route("/recording/view/{id}",name="view-recording")
      */
     public function viewRecordingAction(Request $request,Recording $recording){
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -130,7 +142,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/home/recording/{id}/new/",name="new-mp3")
+     * @Route("/recording/{id}/new/",name="new-mp3")
      */
     public function addMp3Action(Request $request,Recording $recording){
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -160,11 +172,120 @@ class UserController extends Controller
             'errors'=>$errors
         ]);
     }
+
+
     /**
-     * @Route("/logout",name="user_logout")
+     * @Route("/next-of-kin/new",name="add-next-of-kin")
      */
-    public function logoutAction(){
-        throw new \Exception('This should not be reached');
+   public function addNextOfKinAction(Request $request){
+       $user = $this->get('security.token_storage')->getToken()->getUser();
+
+       $nextOfKin = new NextOfKin();
+       $nextOfKin->setCreatedAt(new \DateTime());
+       $nextOfKin->setUpdatedAt(new \DateTime());
+       $nextOfKin->setWhoseKin($user);
+
+       $form = $this->createForm(NextOfKinForm::class, $nextOfKin);
+
+       //only handles data on POST
+       $form->handleRequest($request);
+
+       if ($form->isSubmitted() && $form->isValid()) {
+
+           $nextOfKin = $form->getData();
+
+           $em = $this->getDoctrine()->getManager();
+           $em->persist($nextOfKin);
+           $em->flush();
+
+           return $this->redirectToRoute('my-next-of-kin');
+       }
+
+       return $this->render('home/nextOfKin/new.html.twig', [
+           'nextOfKinForm' => $form->createView()
+       ]);
+   }
+    /**
+     * @Route("/next-of-kin",name="my-next-of-kin")
+     */
+    public function listKinAction(Request $request){
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+        $nextOfKin = $em->getRepository('AppBundle:NextOfKin')
+            ->findMyKin($user);
+
+        return $this->render('home/nextOfKin/list.html.twig', [
+            'kinsList' => $nextOfKin
+        ]);
+    }
+    /**
+     * @Route("/next-of-kin/{id}/view",name="view-kin-details")
+     */
+    public function viewNextOfKinAction(Request $request,NextOfKin $nextOfKin){
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        return $this->render('home/nextOfKin/details.htm.twig', [
+            'nextOfKin' => $nextOfKin,
+        ]);
+
+    }
+    /**
+     * @Route("/next-of-kin/{id}/edit",name="edit-next-of-kin")
+     */
+    public function editNextOfKinAction(Request $request,NextOfKin $nextOfKin){
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+
+        $form = $this->createForm(NextOfKinForm::class, $nextOfKin);
+
+        //only handles data on POST
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $nextOfKin = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($nextOfKin);
+            $em->flush();
+
+            return $this->redirectToRoute('my-next-of-kin');
+        }
+
+        return $this->render('home/nextOfKin/new.html.twig', [
+            'nextOfKinForm' => $form->createView()
+        ]);
     }
 
+    /**
+     * @Route("/edit-profile",name="edit-profile")
+     */
+    public function myProfileAction(Request $request){
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $profile = $user->getMyProfile();
+
+        $form = $this->createForm(ProfileForm::class,$profile);
+
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $profile = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($profile);
+            $em->flush();
+
+
+            return $this->redirectToRoute('home');
+        }else{
+            $errors = $form->getErrors();
+        }
+
+        return $this->render(':profile:edit.htm.twig',[
+            'profileForm'=>$form->createView(),
+            'profile'=>$profile,
+            'errors'=>$errors
+        ]);
+    }
 }

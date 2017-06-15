@@ -1,5 +1,5 @@
 {% extends 'adminBase.htm.twig' %}
-{% block title %}Step 1 Users{% endblock %}
+{% block title %}Open Profiles{% endblock %}
 
 {% block body %}
     <div id="content" class="app-content box-shadow-z0" role="main">
@@ -35,7 +35,7 @@
                                     <td>{{ user.createdAt | date("F jS \\a\\t g:ia") }}</td>
                                     <td> <a href="{{ path('review-profile',{'id': user.id }) }}"
                                             class="btn btn-xs white"><i title="Manage" class="fa fa-pencil"></i> </a>
-                                        <a href="{{ path('review-profile',{'id': user.id }) }}"
+                                        <a href="{{ path('pdf-profile',{'id': user.id }) }}"
                                            class="btn btn-xs white btn-icon"><i title="Export" class="fa fa-file-pdf-o"></i></a></td>
                                 </tr>
                             {% endfor  %}

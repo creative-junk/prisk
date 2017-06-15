@@ -32,6 +32,9 @@ class ProfileController extends Controller
         $profile->setStageName($onboard->getStageName());
         $profile->setEmailAddress($onboard->getEmail());
         $profile->setProfileStatus("Pending");
+        $profile->setNextOfKinAddedDate(new \DateTime());
+        $profile->setRegistrationDate(new \DateTime());
+        $profile->setSourceOfData("Self");
 
         $profile->setCreatedAt(new \DateTimeImmutable());
         $form = $this->createForm(ProfileForm::class,$profile);
@@ -41,6 +44,7 @@ class ProfileController extends Controller
             $profile = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $payment = $request->request->get('payment');
+
             $em->persist($profile);
             $em->flush();
 

@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,10 +28,10 @@ class ProfileForm extends AbstractType
                     'Pst' => 'Pst',
                     'Other' => 'Other',
                 ),
+                'placeholder'=>'Select'
             ])
             ->add('dateOfBirth',DateType::class,[
                 'widget' => 'single_text',
-                'required' => false,
                 'attr' => ['class' => 'js-datepicker'],
                 'html5' => false,
             ])
@@ -71,6 +72,7 @@ class ProfileForm extends AbstractType
                     'Widowed' => 'Widowed',
                     'Other' => 'Other',
                 ),
+                'placeholder'=>'Select'
             ))
             ->add('spouseName')
             ->add('idNumber')
@@ -96,13 +98,7 @@ class ProfileForm extends AbstractType
                     'Liberia' => 'Liberia',
                 ),
             ))
-            ->add('memberType',ChoiceType::class, array(
-                'choices' => array(
-                    'L' => 'L',
-                    'WW' => 'WW',
-                    'R' => 'R',
-                ),
-            ))
+
             ->add('gender',ChoiceType::class,array(
                 'choices'=>array(
                     'Male'=>'Male',
@@ -111,33 +107,17 @@ class ProfileForm extends AbstractType
                 'choices_as_values' => true,
                 'multiple'=>false,
                 'expanded'=>true,
-                'data' => 'Male',
+                'required' => true,
             ))
             ->add('rights',ChoiceType::class,array(
                 'choices'=>array(
                     'Sound Recording'=>'Sound Recording',
                     'Audio Visual - Actor'=>'Audio Visual - Actor',
                     'Audio Visual - Musician'=>'Audio Visual - Musician',
-                )
-            ))
-            ->add('registrationNumber')
-            ->add('sourceOfData',null,[
-                'attr'=>['placeholder' => 'Self']
-            ])
-            ->add('registrationDate',DateType::class,[
-                'widget' => 'single_text',
-                'required' => false,
-                'attr' => ['class' => 'js-datepicker'],
-                'html5' => false,
-            ])
-            ->add('status',ChoiceType::class,array(
-                'choices'=>array(
-                    'Paid Membership'=>'Paid Membership',
                 ),
-                'choices_as_values' => true,
-                'multiple'=>false,
-                'expanded'=>true,
-                'data' => 'Paid Membership',
+                'multiple'=>true,
+                'label'=>'Rights (Hold CTRL and Click to select multiple)'
+
             ))
             ->add('physicalAddress')
             ->add('postalAddress')
@@ -174,6 +154,7 @@ class ProfileForm extends AbstractType
             ->add('emailAddress')
             ->add('website')
             ->add('nameOfPayee')
+            ->add('paymentMpesaNumber')
             ->add('accountName')
             ->add('bank',ChoiceType::class, array(
                 'choices' => array(
@@ -242,57 +223,14 @@ class ProfileForm extends AbstractType
             ))
             ->add('bankAccountType',ChoiceType::class, array(
                 'choices' => array(
-                    'Checking' => 'Checking',
+                    'Current' => 'Current',
                     'Savings' => 'Savings',
                 ),
             ))
             ->add('bankPostalAddress')
             ->add('iban')
-            ->add('swiftBic')
-            ->add('nextOfKinFirstName')
-            ->add('nextOfKinLastName')
-            ->add('nextOfKinRelationship',ChoiceType::class, array(
-                'choices' => array(
-                    'Spouse' => 'Spouse',
-                    'Parent' => 'Parent',
-                    'Sibling' => 'Sibling',
-                )
-            ))
-            ->add('nextOfKinIdNumber')
-            ->add('nextOfKinPercent')
-            ->add('nextOfKinPhysicalAddress')
-            ->add('nextOfKinPostalAddress')
-            ->add('nextOfKinPostalCode')
-            ->add('nextOfKinCity')
-            ->add('nextOfKinCountry', ChoiceType::class, array(
-                'choices' => array(
-                    'Kenya' => 'Kenya',
-                    'Angola' => 'Angola',
-                    'Burundi' => 'Burundi',
-                    'Cameroon' => 'Cameroon',
-                    'Ethiopia' => 'Ethiopia',
-                    'Ghana' => 'Ghana',
-                    'Lesotho' => 'Lesotho',
-                    'Nigeria' => 'Nigeria',
-                    'Rwanda' => 'Rwanda',
-                    'Senegal' => 'Senegal',
-                    'South Africa' => 'South Africa',
-                    'South Sudan' => 'South Sudan',
-                    'Tanzania' => 'Tanzania',
-                    'Uganda' => 'Uganda',
-                    'Zambia' => 'Zambia',
-                    'Zibambwe' => 'Zimbabwe',
-                    'Liberia' => 'Liberia',
-                )
-            ))
-            ->add('nextOfKinPhoneNumber')
-            ->add('nextOfKinEmail')
-            ->add('nextOfKinAddedDate',DateType::class,[
-                'widget' => 'single_text',
-                'attr' => ['class' => 'js-sincepicker'],
-                'html5' => false,
+            ->add('swiftBic');
 
-            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

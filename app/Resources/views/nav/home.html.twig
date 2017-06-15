@@ -3,8 +3,8 @@
         <div class='sp-megamenu-wrapper'>
             <a id="offcanvas-toggler" class="visible-xs visible-sm" href="#"><i class="fa fa-bars"></i></a>
             <ul class="sp-megamenu-parent menu-fade-up hidden-xs hidden-sm">
-                <li class="sp-menu-item"><a href="{{ path('home') }}">Home</a></li>
-                <li class="sp-menu-item sp-has-child"><a href="{{ path('my-recordings') }}">My Recordings</a>
+                <li class="sp-menu-item"><a href="{{ path('home') }}"><i class="fa fa-home"></i> Home</a></li>
+                <li class="sp-menu-item sp-has-child"><a href="{{ path('my-recordings') }}"><i class="fa fa-music"></i> My Recordings</a>
 
                     <div class="sp-dropdown sp-dropdown-main sp-menu-center"
                          style="width: 240px;left: -120px;">
@@ -15,92 +15,20 @@
                         </div>
                     </div>
                 </li>
-
-                <li class="sp-menu-item sp-has-child active"><a href="http://prisk.org/index.php/en/membership">Membership</a>
-
-                    <div class="sp-dropdown sp-dropdown-main sp-dropdown-mega sp-menu-center"
-                         style="width: 800px;left: -400px;">
-                        <div class="sp-dropdown-inner">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <ul class="sp-mega-group">
-                                        <li class="sp-menu-item sp-has-child active"><a
-                                                    class="sp-group-title" href="http://prisk.org/index.php/en/already-a-member">Already
-                                                a Member?</a>
-                                            <ul class="sp-mega-group-child sp-dropdown-items">
-                                                <li class="sp-menu-item"><a href="{{ path('login') }}">Login</a></li>
-                                                <li class="sp-menu-item current-item active"><a
-                                                            href="{{path('home') }}">Create an
-                                                        Online Account</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="sp-mega-group">
-                                        <li class="sp-menu-item sp-has-child"><a class="sp-group-title"
-                                                                                 href="http://prisk.org/index.php/en/thinking-about-joining">Thinking
-                                                about joining?</a>
-                                            <ul class="sp-mega-group-child sp-dropdown-items">
-                                                <li class="sp-menu-item"><a
-                                                            href="http://prisk.org/index.php/en/thinking-about-joining/why-join-prisk">Why
-                                                        Join Prisk</a></li>
-                                                <li class="sp-menu-item"><a
-                                                            href="http://prisk.org/index.php/en/thinking-about-joining/how-to-join">How
-                                                        to Join</a></li>
-                                                <li class="sp-menu-item"><a
-                                                            href="http://prisk.org/index.php/en/thinking-about-joining/faq">FAQ</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="sp-mega-group">
-                                        <li class="sp-menu-item sp-has-child"><a class="sp-group-title"
-                                                                                 href="http://prisk.org/index.php/en/how-prisk-works">How
-                                                PRISK works?</a>
-                                            <ul class="sp-mega-group-child sp-dropdown-items">
-                                                <li class="sp-menu-item"><a
-                                                            href="http://prisk.org/index.php/en/how-prisk-works/royalty-payments">Royalty
-                                                        Payments</a></li>
-                                                <li class="sp-menu-item"><a
-                                                            href="http://prisk.org/index.php/en/how-prisk-works/insurance">Insurance</a>
-                                                </li>
-                                                <li class="sp-menu-item"><a
-                                                            href="http://prisk.org/index.php/en/how-prisk-works/distribution-rules">Distribution
-                                                        Rules</a></li>
-                                                <li class="sp-menu-item"><a
-                                                            href="http://prisk.org/index.php/en/how-prisk-works/distribution-faq">Distribution
-                                                        FAQ</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="sp-menu-item sp-has-child"><a href="http://prisk.org/index.php/en/user">Licensing</a>
+                <li class="sp-menu-item sp-has-child"><a href="{{ path('my-next-of-kin') }}"><i class="fa fa-group"></i> Next of Kin</a>
 
                     <div class="sp-dropdown sp-dropdown-main sp-menu-center"
                          style="width: 240px;left: -120px;">
                         <div class="sp-dropdown-inner">
                             <ul class="sp-dropdown-items">
-                                <li class="sp-menu-item"><a href="http://prisk.org/index.php/en/user/how-do-i-get-a-license">How
-                                        Do I get a License?</a></li>
-                                <li class="sp-menu-item"><a
-                                            href="http://prisk.org/index.php/en/user/how-much-does-a-license-cost">How much does
-                                        a License Cost?</a></li>
-                                <li class="sp-menu-item"><a href="http://prisk.org/index.php/en/user/regional-offices">Regional
-                                        Offices</a></li>
-                                <li class="sp-menu-item"><a href="http://prisk.org/index.php/en/user/faq">FAQ </a></li>
-                                <li class="sp-menu-item"><a href="http://prisk.org/index.php/en/user/download">Download</a></li>
+                                <li class="sp-menu-item"><a href="{{ path('add-next-of-kin') }}">Add Next of Kin</a></li>
                             </ul>
                         </div>
                     </div>
                 </li>
-                <li class="sp-menu-item"><a href="http://prisk.org/index.php/en/contact">Contact Us</a></li>
+
+                <li class="sp-menu-item"><a href="{{ path('edit-profile') }}"><i class="fa fa-address-book"></i> My Profile</a></li>
+                <li class="sp-menu-item"><a href="{{ path('user_logout') }}"><i title="Logout" class="fa fa-sign-out"></i></a></li>
             </ul>
         </div>
     </div>

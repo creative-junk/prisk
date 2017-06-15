@@ -119,13 +119,13 @@
                     <div style="margin-bottom:-20px">
                         {% if not profileForm.vars.valid %}
 
-                                {# Loop through every form item #}
-                                {% for child in profileForm.children %}
-                                    {# Display the errors of the form item #}
-                                    {%for error in child.vars.errors%}
-                                        <p><div class="alert alert-danger">{{error.message}}</div></p>
-                                    {%endfor%}
+                            {# Loop through every form item #}
+                            {% for child in profileForm.children %}
+                                {# Display the errors of the form item #}
+                                {%for error in child.vars.errors%}
+                                    <p><div class="alert alert-danger">{{error.message}}</div></p>
                                 {%endfor%}
+                            {%endfor%}
 
                         {%endif%}
                         <p><b>Name:</b>  {{ profile.firstName }}&nbsp;{{ profile.lastName }}</p>
@@ -223,14 +223,14 @@
                                 </div>
                             </div>
                         </div>
-<style>
-    #profile_form_rights{
-        height:126px;
-    }
-    #profile_form_gender_1{
-        margin-left: 10px;
-    }
-</style>
+                        <style>
+                            #profile_form_rights{
+                                height:126px;
+                            }
+                            #profile_form_gender_1{
+                                margin-left: 10px;
+                            }
+                        </style>
 
                     </fieldset>
                     <h6>Address Details</h6>
@@ -393,18 +393,7 @@
                         </div>
                     </fieldset>
 
-     <h6>Payment</h6>
-                    <fieldset>
-                        <div class="row">
-                           <input type="radio" name="payment" checked value="pay">&nbsp;Pay and Continue<br/>
-                            <input type="radio" name="payment" value="skip">&nbsp;Pay Later
-                            <p><i>**Kindly note your registration will not be reviewed until payment is made.</i></p>
 
-                        </div>
-                        <div class="row">
-
-
-                        </div>
                     </fieldset>
                     {{ form_end(profileForm) }}
 

@@ -56,6 +56,7 @@ class Profile
     private $prefix;
     /**
      * @ORM\Column(type="date",nullable=true)
+     * @Assert\NotBlank()
      */
     private $dateOfBirth;
     /**
@@ -94,8 +95,7 @@ class Profile
      */
     private $countryOfResidence;
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string",nullable=true)
      */
     private $memberType;
     /**
@@ -103,7 +103,7 @@ class Profile
      */
     private $gender;
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="simple_array",nullable=true)
      */
     private $rights;
     /**
@@ -172,6 +172,10 @@ class Profile
      */
     private $nameOfPayee;
     /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $paymentMpesaNumber;
+    /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
@@ -212,67 +216,7 @@ class Profile
      * @ORM\Column(type="string",nullable=true)
      */
     private $swiftBic;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinFirstName;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinLastName;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinRelationship;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinIdNumber;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinPercent;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinPhysicalAddress;
-    /**
-     * @ORM\Column(type="string",nullable=true)
-     */
-    private $nextOfKinPostalAddress;
-    /**
-     * @ORM\Column(type="string",nullable=true)
-     */
-    private $nextOfKinPostalCode;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinCity;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinCountry;
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     */
-    private $nextOfKinPhoneNumber;
-    /**
-     * @ORM\Column(type="string",nullable=true)
-     */
-    private $nextOfKinEmail;
-    /**
-     * @ORM\Column(type="date",nullable=true)
-     */
-    private $nextOfKinAddedDate;
+
     /**
      * @ORM\Column(type="boolean",nullable=true)
      */
@@ -1017,213 +961,6 @@ class Profile
         $this->swiftBic = $swiftBic;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinFirstName()
-    {
-        return $this->nextOfKinFirstName;
-    }
-
-    /**
-     * @param mixed $nextOfKinFirstName
-     */
-    public function setNextOfKinFirstName($nextOfKinFirstName)
-    {
-        $this->nextOfKinFirstName = $nextOfKinFirstName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinLastName()
-    {
-        return $this->nextOfKinLastName;
-    }
-
-    /**
-     * @param mixed $nextOfKinLastName
-     */
-    public function setNextOfKinLastName($nextOfKinLastName)
-    {
-        $this->nextOfKinLastName = $nextOfKinLastName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinRelationship()
-    {
-        return $this->nextOfKinRelationship;
-    }
-
-    /**
-     * @param mixed $nextOfKinRelationship
-     */
-    public function setNextOfKinRelationship($nextOfKinRelationship)
-    {
-        $this->nextOfKinRelationship = $nextOfKinRelationship;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinIdNumber()
-    {
-        return $this->nextOfKinIdNumber;
-    }
-
-    /**
-     * @param mixed $nextOfKinIdNumber
-     */
-    public function setNextOfKinIdNumber($nextOfKinIdNumber)
-    {
-        $this->nextOfKinIdNumber = $nextOfKinIdNumber;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinPercent()
-    {
-        return $this->nextOfKinPercent;
-    }
-
-    /**
-     * @param mixed $nextOfKinPercent
-     */
-    public function setNextOfKinPercent($nextOfKinPercent)
-    {
-        $this->nextOfKinPercent = $nextOfKinPercent;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinPhysicalAddress()
-    {
-        return $this->nextOfKinPhysicalAddress;
-    }
-
-    /**
-     * @param mixed $nextOfKinPhysicalAddress
-     */
-    public function setNextOfKinPhysicalAddress($nextOfKinPhysicalAddress)
-    {
-        $this->nextOfKinPhysicalAddress = $nextOfKinPhysicalAddress;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinPostalAddress()
-    {
-        return $this->nextOfKinPostalAddress;
-    }
-
-    /**
-     * @param mixed $nextOfKinPostalAddress
-     */
-    public function setNextOfKinPostalAddress($nextOfKinPostalAddress)
-    {
-        $this->nextOfKinPostalAddress = $nextOfKinPostalAddress;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinPostalCode()
-    {
-        return $this->nextOfKinPostalCode;
-    }
-
-    /**
-     * @param mixed $nextOfKinPostalCode
-     */
-    public function setNextOfKinPostalCode($nextOfKinPostalCode)
-    {
-        $this->nextOfKinPostalCode = $nextOfKinPostalCode;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinCity()
-    {
-        return $this->nextOfKinCity;
-    }
-
-    /**
-     * @param mixed $nextOfKinCity
-     */
-    public function setNextOfKinCity($nextOfKinCity)
-    {
-        $this->nextOfKinCity = $nextOfKinCity;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinCountry()
-    {
-        return $this->nextOfKinCountry;
-    }
-
-    /**
-     * @param mixed $nextOfKinCountry
-     */
-    public function setNextOfKinCountry($nextOfKinCountry)
-    {
-        $this->nextOfKinCountry = $nextOfKinCountry;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinPhoneNumber()
-    {
-        return $this->nextOfKinPhoneNumber;
-    }
-
-    /**
-     * @param mixed $nextOfKinPhoneNumber
-     */
-    public function setNextOfKinPhoneNumber($nextOfKinPhoneNumber)
-    {
-        $this->nextOfKinPhoneNumber = $nextOfKinPhoneNumber;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinEmail()
-    {
-        return $this->nextOfKinEmail;
-    }
-
-    /**
-     * @param mixed $nextOfKinEmail
-     */
-    public function setNextOfKinEmail($nextOfKinEmail)
-    {
-        $this->nextOfKinEmail = $nextOfKinEmail;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNextOfKinAddedDate()
-    {
-        return $this->nextOfKinAddedDate;
-    }
-
-    /**
-     * @param mixed $nextOfKinAddedDate
-     */
-    public function setNextOfKinAddedDate($nextOfKinAddedDate)
-    {
-        $this->nextOfKinAddedDate = $nextOfKinAddedDate;
-    }
 
 
     /**
@@ -1472,6 +1209,22 @@ class Profile
     public function setWhoseProfile($whoseProfile)
     {
         $this->whoseProfile = $whoseProfile;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentMpesaNumber()
+    {
+        return $this->paymentMpesaNumber;
+    }
+
+    /**
+     * @param mixed $paymentMpesaNumber
+     */
+    public function setPaymentMpesaNumber($paymentMpesaNumber)
+    {
+        $this->paymentMpesaNumber = $paymentMpesaNumber;
     }
 
 }

@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use WhiteOctober;
 
 /**
  * @Route("/admin")
@@ -213,7 +214,38 @@ class AdminController extends Controller
             'profileReviewForm' => $form->createView()
         ]);
     }
+    /**
+     * @Route("/users/profile/{id}/pdf",name="pdf-profile")
+     */
+    public function pdfProfileAction(Request $request, Profile $profile){
 
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+
+        $html = $this->renderView('admin/profile/profilePDF.htm.twig',[
+            'profile'=>$profile,
+
+        ]);
+
+        $this->returnPDFResponseFromHTML($html);
+    }
+    public function returnPDFResponseFromHTML($html){
+        //set_time_limit(30); uncomment this line according to your needs
+
+        $pdf = $this->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+        $pdf->SetTitle(('Profile Review'));
+        $pdf->SetSubject('Profile Review');
+        $pdf->setFontSubsetting(true);
+        $pdf->SetFont('helvetica', '', 11, '', true);
+        $pdf->SetMargins(20,20,40, true);
+        $pdf->AddPage();
+
+        $filename = 'profile';
+
+        $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+        $pdf->Output($filename.".pdf",'I'); // This will output the PDF as a response directly
+    }
     /**
      * @Route("/account/{id}/new",name="create-account")
      */

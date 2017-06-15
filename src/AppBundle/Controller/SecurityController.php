@@ -122,7 +122,7 @@ class SecurityController extends Controller
         ]);
     }
     /**
-     * @Route("/login/",name="user_login")
+     * @Route("/login/",name="login")
      *
      */
     public function loginUserAction()
@@ -146,6 +146,7 @@ class SecurityController extends Controller
                 'error' => $error,
             ));
     }
+
     /**
      * @Route("/account/request",name="request-admin-account")
      */
@@ -210,6 +211,12 @@ class SecurityController extends Controller
      * @Route("/logout",name="security_logout")
      */
     public function logoutAction(){
+        throw new \Exception('This should not be reached');
+    }
+    /**
+     * @Route("/logout",name="user_logout")
+     */
+    public function logoutUserAction(){
         throw new \Exception('This should not be reached');
     }
 }
