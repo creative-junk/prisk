@@ -99,6 +99,7 @@ class ProfileController extends Controller
             $this->container->get('session')->set('transactionId', $transactionId);
 
             if ($statusCode==200) {
+
                 return $this->redirectToRoute('mpesa_paid');
             }else{
                 return $this->redirectToRoute('mpesa_failed');
@@ -162,7 +163,9 @@ class ProfileController extends Controller
 
 
         if ($transactionStatus=="Success"){
+
             $success = "Success";
+
             $user->setMpesaConfirmationCode($mPesaTransactionId);
             $user->setMpesaDescription($transactionDescription);
             $user->setMpesaPaymentDate(new \DateTime($transactionDate));
@@ -172,6 +175,8 @@ class ProfileController extends Controller
             $user->setMpesaAmount($transactionAmount);
             $em->persist($user);
             $em->flush();
+
+            $this->sendPaymentEmail($user->getFirstName(),$user->getEmailAddress(),null);
 
         }else{
             $success = "Failed";
@@ -251,6 +256,23 @@ class ProfileController extends Controller
             'mpesaForm'=>$form->createView()
 
         ]);
+    }
+    public function sendPaymentEmail($firstName,$emailAddress,$code){
+        $message = \Swift_Message::newInstance()
+            ->setSubject('PRISK Online Portal Profile')
+            ->setFrom('prisk@creative-junk.com','PRISK Online Portal Team')
+            ->setTo($emailAddress)
+            ->setBody(
+                $this->renderView(
+                // app/Resources/views/Emails/onboard.htm.twig
+                    'Emails/paid.htm.twig',
+                    array(
+                        'name' => $firstName
+                    )
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
     }
     public function sendWelcomeEmail($firstName,$emailAddress,$code){
         $message = \Swift_Message::newInstance()

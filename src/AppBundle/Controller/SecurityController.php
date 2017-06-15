@@ -6,6 +6,7 @@ use AppBundle\Entity\User;
 use AppBundle\Form\AdministratorRegistrationForm;
 use AppBundle\Form\LoginForm;
 use AppBundle\Form\NewAdministratorForm;
+use AppBundle\Form\ResetPasswordForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -14,7 +15,81 @@ use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends Controller
 {
 
+    /**
+     * @Route("/account/{code}/activate",name="user-activate-account")
+     */
+    public function userFirstLoginAction(Request $request,$code){
+        $em = $this->getDoctrine()->getManager();
 
+        $idNumber = base64_decode($code);
+
+        $profile = $em->getRepository("AppBundle:Profile")
+            ->findOneBy([
+                'idNumber'=>$code
+            ]);
+        $user = $profile->getWhoseProfile();
+        //$user->setRoles('["R"]')
+        $form = $this->createForm(ResetPasswordForm::class,$user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $user=$form->getData();
+            $user->setIsPasswordCreated(true);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->render('user/accountUpdated.htm.twig');
+        }
+
+        if ($user->getIsPasswordCreated()){
+            $activated = true;
+        }else{
+            $activated = false;
+        }
+
+        return $this->render('user/activate.htm.twig',[
+            'user'=>$user,
+            'activationForm'=>$form->createView(),
+            'isActivated'=>$activated
+        ]);
+    }
+    /**
+     * @Route("/account/{code}/reset-password",name="user-reset-password")
+     */
+    public function resetPasswordAction(Request $request,$code){
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository("AppBundle:User")
+            ->findOneBy([
+                'passwordResetToken'=>$code
+            ]);
+
+        $form = $this->createForm(ResetPasswordForm::class,$user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $user=$form->getData();
+            $user->setIsResetTokenValid(false);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->render('user/passwordUpdated.htm.twig');
+        }
+
+        if ($user->getIsResetTokenValid()){
+            $validToken = true;
+        }else{
+            $validToken = false;
+        }
+
+        return $this->render('user/reset-password.htm.twig',[
+            'user'=>$user,
+            'passwordResetForm'=>$form->createView(),
+            'isTokenValid'=>$validToken
+        ]);
+    }
     /**
      * @Route("/login/",name="user_login")
      *

@@ -36,7 +36,9 @@
       <sourceFolder url="file://$MODULE_DIR$/vendor/symfony/symfony/src/Symfony/Component/ClassLoader/Tests/Fixtures/Apc/beta" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/var/cache" />
       <excludeFolder url="file://$MODULE_DIR$/web/loko/js/charts" />
+      <excludeFolder url="file://$MODULE_DIR$/web/loko/js/core" />
       <excludeFolder url="file://$MODULE_DIR$/web/loko/js/maps" />
+      <excludeFolder url="file://$MODULE_DIR$/web/loko/js/pages" />
       <excludeFolder url="file://$MODULE_DIR$/web/loko/js/plugins" />
     </content>
     <orderEntry type="inheritedJdk" />

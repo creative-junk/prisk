@@ -241,10 +241,11 @@ class AdminController extends Controller
 
         $em->flush();
 
-        $this->sendEmail($profile->getFirstName(),"Your Prisk Portal Account",$profile->getEmailAddress(),"accountCreated.htm.twig",$user->getId());
+        $this->sendEmail($profile->getFirstName(),"Your Prisk Portal Account",$profile->getEmailAddress(),"accountCreated.htm.twig",base64_encode($user->getId()));
 
         return new Response(null, 204);
     }
+
 
     /**
      * @Route("/user/account/{id}/reset",name="request-password-reset")
