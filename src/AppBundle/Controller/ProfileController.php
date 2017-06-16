@@ -264,7 +264,7 @@ class ProfileController extends Controller
     public function sendPaymentEmail($firstName,$emailAddress,$code){
         $message = \Swift_Message::newInstance()
             ->setSubject('PRISK Online Portal Profile')
-            ->setFrom('prisk@creative-junk.com','PRISK Online Portal Team')
+            ->setFrom('portal@prisk.or.ke','PRISK Online Portal Team')
             ->setTo($emailAddress)
             ->setBody(
                 $this->renderView(
@@ -281,7 +281,7 @@ class ProfileController extends Controller
     public function sendWelcomeEmail($firstName,$emailAddress,$code){
         $message = \Swift_Message::newInstance()
             ->setSubject('PRISK Online Portal Profile')
-            ->setFrom('prisk@creative-junk.com','PRISK Online Portal Team')
+            ->setFrom('portal@prisk.or.ke','PRISK Online Portal Team')
             ->setTo($emailAddress)
             ->setBody(
                 $this->renderView(
@@ -298,7 +298,7 @@ class ProfileController extends Controller
     public function sendUnpaidWelcomeEmail($firstName,$emailAddress,$code){
         $message = \Swift_Message::newInstance()
             ->setSubject('PRISK Online Portal Profile')
-            ->setFrom('prisk@prisk.or.ke','PRISK Online Portal Team')
+            ->setFrom('portal@prisk.or.ke','PRISK Online Portal Team')
             ->setTo($emailAddress)
             ->setBody(
                 $this->renderView(

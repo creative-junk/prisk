@@ -395,7 +395,7 @@ class AdminController extends Controller
     protected function sendEmail($firstName,$subject,$emailAddress,$twigTemplate,$code){
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            //->setFrom(null,'PRISK Online Portal Team')
+            ->setFrom('portal@prisk.or.ke','PRISK Online Portal Team')
             ->setTo($emailAddress)
             ->setBody(
                 $this->renderView(
