@@ -22,8 +22,8 @@ class ProfileRepository extends EntityRepository
 
         return $this->createQueryBuilder('profile')
             ->orderBy('profile.createdAt','DESC')
-          //  ->andWhere('profile.isPaid = :isPaid')
-            //->setParameter(':isPaid',true)
+            ->andWhere('profile.isPaid = :isPaid')
+            ->setParameter(':isPaid',true)
             ->andWhere('profile.profileStatus = :isApproved')
             ->setParameter(':isApproved','Pending')
             ->getQuery()

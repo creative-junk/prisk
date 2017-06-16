@@ -7,6 +7,7 @@
  */
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\NextOfKin;
 use AppBundle\Entity\Profile;
 use AppBundle\Entity\User;
 use AppBundle\Form\NewAdministratorForm;
@@ -408,5 +409,32 @@ class AdminController extends Controller
             );
         $this->get('mailer')->send($message);
     }
+    /**
+     * @Route("/next-of-kin/list/{id}",name="next-of-kin")
+     */
+    public function listKinAction(Request $request,Profile $profile){
 
+        $em = $this->getDoctrine()->getManager();
+        $user=$profile->getWhoseProfile();
+
+        $nextOfKin = $em->getRepository('AppBundle:NextOfKin')
+            ->findMyKin($user);
+
+        return $this->render('admin/nextofkin/list.htm.twig', [
+            'kinsList' => $nextOfKin,
+            'user' =>$user
+        ]);
+    }
+    /**
+     * @Route("/next-of-kin/view/{id}",name="admin-view-kin-details")
+     */
+    public function viewNextOfKinAction(Request $request,NextOfKin $nextOfKin){
+        $user = $nextOfKin->getWhoseKin();
+        $profile = $user->getMyProfile();
+        return $this->render('admin/nextofkin/details.htm.twig', [
+            'nextOfKin' => $nextOfKin,
+            'profile' =>$profile
+        ]);
+
+    }
 }

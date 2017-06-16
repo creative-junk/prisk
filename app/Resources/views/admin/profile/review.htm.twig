@@ -17,10 +17,7 @@
                 <!-- navbar right -->
                 <ul class="nav navbar-nav pull-right">
                     <li class="nav-item dropdown pos-stc-xs">
-                       <!-- <a class="nav-link" href data-toggle="dropdown">
-                            <i class="material-icons">&#xe7f5;</i>
-                            <span class="label label-sm up warn">3</span>
-                        </a> -->
+
 
                     </li>
                     <li class="nav-item dropdown">
@@ -114,7 +111,7 @@
                                 <strong>Rights:&nbsp;&nbsp; </strong>
                                 {% for profileRight in profile.rights %}
                                     <br/>{{ profileRight }}
-                                    {% endfor %}
+
                                 {% endfor %}
 
                             </div>
@@ -281,68 +278,7 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Next of Kin</strong></div>
-                    <div class="panel-body">
 
-                        <div class="row">
-                            <div class="col-md-6"><strong>Last Name:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinLastName }}
-                            </div>
-                            <div class="col-md-6"><strong>First Name:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinFirstName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6"><strong>Relationship:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinRelationship }}
-                            </div>
-                            <div class="col-md-6"><strong>ID Number:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinIdNumber }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6"><strong>Percent:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinPercent }}
-                            </div>
-                            <div class="col-md-6"><strong>Physical Address:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinPhysicalAddress }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6"><strong>Postal Address:&nbsp;&nbsp; </strong>
-
-                                {{ profile.nextOfKinPostalAddress }}
-                            </div>
-                            <div class="col-md-6"><strong>Postal Code:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinPostalCode }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6"><strong>City:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinCity }}
-                            </div>
-                            <div class="col-md-6"><strong>Country:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinCountry }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6"><strong>Phone Number:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinPhoneNumber }}
-                            </div>
-                            <div class="col-md-6"><strong>Email:&nbsp;&nbsp; </strong>
-                                {{ profile.nextOfKinEmail }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6"><strong>Nationality:&nbsp;&nbsp; </strong>
-                                {{ profile.nationality   }}
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Approval</strong></div>
                     <div class="panel-body">

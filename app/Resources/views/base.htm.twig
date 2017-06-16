@@ -1065,18 +1065,9 @@
                         <div class="sp-module mod_search">
                             <div class="sp-module-content">
                                 <div class="search mod_search">
-                                    <form action="http://prisk.or.ke/index.php/en/membership/already-a-member/create-an-online-account"
-                                          method="post">
-                                        <input style="width:220px" name="searchword" id="mod-search-searchword" maxlength="200"
-                                               class="inputbox search-query" type="text" size="200"
-                                               placeholder="Search. . . "/> <input type="image" value="Search"
-                                                                                   class="button"
-                                                                                   src="{{ asset('loko/images/searchButton.gif') }}"
-                                                                                   onclick="this.form.searchword.focus();"/>
-                                        <input type="hidden" name="task" value="search"/>
-                                        <input type="hidden" name="option" value="com_search"/>
-                                        <input type="hidden" name="Itemid" value="991"/>
-                                    </form>
+                                    {% if is_granted('ROLE_USER') %}
+                                    Hello ,  {{ app.user.firstName }}. <br/> Welcome to PRISK Online Portal
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
